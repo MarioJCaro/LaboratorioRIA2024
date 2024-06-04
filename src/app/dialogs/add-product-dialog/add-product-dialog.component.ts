@@ -9,23 +9,29 @@ import { Producto } from '../../services/productos.service';
 })
 export class AddProductDialogComponent {
 
-  producto: Producto = {
-    id: 0, // Este valor se generará en el backend o al momento de enviar la solicitud
-    nombre: '',
-    precio: 0,
-    descripcion: '',
-    imagen: ''
-  };
+  producto: Producto;
 
   constructor(
     public dialogRef: MatDialogRef<AddProductDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+      if (data && data.producto) {
+        this.producto = {...data.producto};
+      } else {
+        this.producto = {
+          id: 0,
+          nombre: '',
+          precio: 0,
+          descripcion: '',
+          imagen: ''
+        };
+      }
+    }
 
   onCancel(): void {
     this.dialogRef.close();
   }
 
-  onAdd(): void {
+  onSave(): void {
     this.dialogRef.close(this.producto);
   }
 }

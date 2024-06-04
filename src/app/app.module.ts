@@ -21,13 +21,15 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { AddProductDialogComponent } from './dialogs/add-product-dialog/add-product-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from './dialogs/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     ProductosComponent,
-    AddProductDialogComponent
+    AddProductDialogComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
