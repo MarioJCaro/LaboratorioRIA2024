@@ -1,0 +1,59 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 0 1rem; /* Añadir padding para móviles */
+  }
+  
+  mat-card {
+    width: 100%; /* 100% del ancho para móviles */
+    max-width: 400px; /* Limitar el ancho máximo */
+  }
+
+  mat-card-title {
+    text-align: center; /* Centrar el título */
+    margin-bottom: 1rem; /* Añadir margen inferior para separar el título de los campos */
+  }
+  
+  mat-form-field {
+    width: 100%; /* Asegurarse de que los campos ocupen el 100% del ancho */
+  }
+  .register-link {
+    margin-top: 1rem; /* Espacio superior entre el botón y el enlace */
+    text-align: center; /* Centrar el enlace */
+  }
+  
+  .register-link a {
+    text-decoration: none; /* Quitar subrayado del enlace */
+    color: #3f51b5; /* Color del enlace */
+    font: 1.15em sans-serif;
+  }
+  
+  button {
+    width: 100%; /* Botón ancho completo para móviles */
+    margin-top: 1rem; /* Espacio entre los campos y el botón */
+  }
+  
+  /* Media query para tablets y dispositivos más grandes */
+  @media (min-width: 600px) {
+    .login-container {
+      padding: 0 2rem; /* Aumentar el padding para tablets */
+    }
+  
+    mat-card {
+      width: 80%; /* Reducir el ancho del card en pantallas más grandes */
+    }
+  }
+  
+  /* Media query para dispositivos aún más grandes, como desktops */
+  @media (min-width: 1024px) {
+    .login-container {
+      padding: 0 3rem; /* Aumentar el padding para desktops */
+    }
+  
+    mat-card {
+      width: 60%; /* Reducir aún más el ancho del card */
+    }
+  }
+  
