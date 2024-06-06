@@ -1,57 +1,71 @@
 /* Estilos para la barra lateral */
 .sidenav-container {
-    height: 100%;
-    background-color: #37474F; /* Color de fondo de la barra lateral */
-  }
-  
-  mat-sidenav {
-    width: 220px; /* Ancho de la barra lateral */
-    background-color: #263238; /* Color de fondo del menú de la barra lateral */
-  }
-  
-  /* Estilos para los elementos de la lista de navegación */
-  mat-nav-list {
-    padding: 8px 0; /* Espaciado en la lista de navegación */
-  }
-  
-  mat-nav-list a {
-    padding: 8px 16px; /* Espaciado interno de los enlaces */
-    color: white; /* Color del texto de los enlaces */
-    text-decoration: none; /* Eliminar subrayado de los enlaces */
-    transition: background-color 0.3s ease; /* Transición suave para el cambio de color de fondo */
-  }
-  
-  mat-nav-list a:hover,
-  mat-nav-list a.active {
-    background-color: #546E7A; /* Color de fondo del elemento activo o al pasar el mouse */
-  }
-  
-  /* Estilos para el contenido principal */
-  mat-sidenav-content {
-    padding: 16px; /* Espaciado interno del contenido principal */
-  }
-  
-  .logo-container {
-    text-align: center;
-    padding: 1rem;
-  }
-  
-  /* Estilos para el mensaje de bienvenida */
-  .welcome-msg {
-    color: white;
-    text-align: center;
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin-top: 0.5rem;
-    margin-bottom: 2rem;
-  }
+  height: 100%;
+  background-color: #37474F;
+}
 
-  .item {
-    display: flex;
-    align-items: center; /* Alinear verticalmente los elementos */
-    
-  }
-  
-  .item mat-icon {
-    margin-right: 8px; /* Espacio entre el icono y el texto */
-  }
+mat-sidenav {
+  width: 220px; /* Ancho de la barra lateral */
+  background-color: #263238; /* Color de fondo del menú de la barra lateral */
+}
+
+/* Estilos para los elementos de la lista de navegación */
+mat-nav-list {
+  padding: 8px 0; /* Espaciado en la lista de navegación */
+}
+
+mat-nav-list a {
+  padding: 8px 16px; /* Espaciado interno de los enlaces */
+  color: white; /* Color del texto de los enlaces */
+  text-decoration: none; /* Eliminar subrayado de los enlaces */
+  transition: background-color 0.3s ease; /* Transición suave para el cambio de color de fondo */
+}
+
+mat-nav-list a:hover,
+mat-nav-list a.active {
+  background-color: #546E7A; /* Color de fondo del elemento activo o al pasar el mouse */
+}
+
+/* Estilos para el contenido principal */
+mat-sidenav-content {
+  padding: 16px; /* Espaciado interno del contenido principal */
+}
+
+.logo-container {
+  text-align: center;
+  padding: 1rem;
+}
+
+/* Estilos para el mensaje de bienvenida */
+.welcome-msg {
+  color: white;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-top: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.item {
+  display: flex;
+  align-items: center; /* Alinear verticalmente los elementos */
+}
+
+.item mat-icon {
+  margin-right: 8px; /* Espacio entre el icono y el texto */
+}
+
+/* Estilos para el botón del menú */
+.menu-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1000;
+  background-color: white; /* Color de fondo del botón */
+  color: #263238; /* Color del icono del botón */
+}
+
+/* Estilos específicos para el router-outlet */
+.router-outlet-container {
+  margin-top: 56px; /* Ajustar este valor según sea necesario */
+}

@@ -21,11 +21,10 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  login(credentials: { email: string, password: string }): Observable<boolean> {
+ login(credentials: { email: string, password: string }): Observable<boolean> {
     return this.http.post<LoginResponse>(`${this.apiUrl}/login`, credentials).pipe(
       map(response => {
         localStorage.setItem('token', response.token);
-        //Almacenamos en la local storage el email y el role que devuelve la response, ambas en un objeto llamado user
         localStorage.setItem('user', JSON.stringify({ email: response.nombre, role: response.role }));
         this.loggedInSubject.next(true);
         return true;
@@ -33,6 +32,8 @@ export class AuthService {
       catchError(() => of(false))
     );
   }
+
+
 
   register(data: { email: string, password: string, role: string, telefono: string }): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/register`, data).pipe(
@@ -54,7 +55,7 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
-    this.loggedInSubject.next(false);
+    this.loggedInSubject.next(false); 
   }
 
   getCurrentUser() {
