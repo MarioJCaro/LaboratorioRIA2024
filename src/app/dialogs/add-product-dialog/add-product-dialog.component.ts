@@ -34,4 +34,14 @@ export class AddProductDialogComponent {
   onSave(): void {
     this.dialogRef.close(this.producto);
   }
+  onFileSelected(event: any): void {
+    const file: File = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.producto.imagen = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
 }

@@ -24,14 +24,18 @@ export class RegisterComponent implements OnInit {
     this.registerForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      role: ['', Validators.required],
       telefono: ['', [Validators.required, Validators.pattern(/^\d+$/)]]
     });
   }
 
   onSubmit(): void {
     if (this.registerForm.valid) {
-      this.authService.register(this.registerForm.value).subscribe(
+      const registerData = {
+        ...this.registerForm.value,
+        role: 'USER' 
+      };
+
+      this.authService.register(registerData).subscribe(
         response => {
           if (response) {
             this.snackBar.open('Registro exitoso. Por favor inicie sesión.', 'Cerrar', {
@@ -45,7 +49,7 @@ export class RegisterComponent implements OnInit {
             duration: 3000,
           });
         }
-      );  
+      );
     }
   }
 }

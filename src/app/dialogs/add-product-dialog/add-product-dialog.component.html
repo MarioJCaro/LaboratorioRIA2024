@@ -6,16 +6,19 @@
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Precio</mat-label>
-    <input matInput type="number" [(ngModel)]="producto.precio">
+    <input matInput type="number" [(ngModel)]="producto.precio" class="no-spinner">
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Descripción</mat-label>
-    <textarea matInput [(ngModel)]="producto.descripcion"></textarea>
+    <textarea matInput [(ngModel)]="producto.descripcion" class="no-resize"></textarea>
   </mat-form-field>
-  <mat-form-field appearance="fill">
-    <mat-label>URL de Imagen</mat-label>
-    <input matInput [(ngModel)]="producto.imagen">
-  </mat-form-field>
+  <div class="file-input-container">
+    <label>Imagen</label>
+    <input type="file" (change)="onFileSelected($event)" accept="image/*">
+  </div>
+  <div *ngIf="producto.imagen" class="image-preview">
+    <img [src]="producto.imagen" alt="Vista previa de la imagen" />
+  </div>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onCancel()">Cancelar</button>

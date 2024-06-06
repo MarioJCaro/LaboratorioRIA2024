@@ -53,4 +53,15 @@
       width: 60%; /* Reducir aún más el ancho del card */
     }
   }
-  
+  .register-link {
+    margin-top: 1rem; 
+    text-align: center; 
+  }
+  .register-link a {
+    text-decoration: none; 
+    color: #3f51b5; 
+    font: 1.15em sans-serif;
+    &:hover {
+      text-decoration: underline;
+    }
+  }

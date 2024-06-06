@@ -56,7 +56,13 @@ const doc = {
       descripcion: "Descripción del producto",
       imagen: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA...",
       precio: 9.99
-    }
+    },
+    Insumo: {
+      id: 1,
+      nombre: "Insumo Ejemplo",
+      unidad: "Kg",
+      costo: 100
+    },
   }
 };
 

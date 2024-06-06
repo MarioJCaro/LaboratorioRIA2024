@@ -1,34 +1,33 @@
-/* Estilos para la barra lateral */
+
 .sidenav-container {
   height: 100%;
   background-color: #37474F;
 }
 
 mat-sidenav {
-  width: 220px; /* Ancho de la barra lateral */
-  background-color: #263238; /* Color de fondo del menú de la barra lateral */
+  width: 220px; 
+  background-color: #263238; 
 }
 
-/* Estilos para los elementos de la lista de navegación */
+
 mat-nav-list {
-  padding: 8px 0; /* Espaciado en la lista de navegación */
+  padding: 8px 0; 
 }
 
 mat-nav-list a {
-  padding: 8px 16px; /* Espaciado interno de los enlaces */
-  color: white; /* Color del texto de los enlaces */
-  text-decoration: none; /* Eliminar subrayado de los enlaces */
-  transition: background-color 0.3s ease; /* Transición suave para el cambio de color de fondo */
+  padding: 8px 16px;
+  color: white; 
+  text-decoration: none; 
+  transition: background-color 0.3s ease; 
 }
 
 mat-nav-list a:hover,
 mat-nav-list a.active {
-  background-color: #546E7A; /* Color de fondo del elemento activo o al pasar el mouse */
+  background-color: #546E7A; 
 }
 
-/* Estilos para el contenido principal */
 mat-sidenav-content {
-  padding: 16px; /* Espaciado interno del contenido principal */
+  padding: 16px; 
 }
 
 .logo-container {
@@ -36,7 +35,6 @@ mat-sidenav-content {
   padding: 1rem;
 }
 
-/* Estilos para el mensaje de bienvenida */
 .welcome-msg {
   color: white;
   text-align: center;
@@ -48,24 +46,22 @@ mat-sidenav-content {
 
 .item {
   display: flex;
-  align-items: center; /* Alinear verticalmente los elementos */
+  align-items: center; 
 }
 
 .item mat-icon {
-  margin-right: 8px; /* Espacio entre el icono y el texto */
+  margin-right: 8px; 
 }
 
-/* Estilos para el botón del menú */
 .menu-button {
   position: absolute;
   top: 10px;
   left: 10px;
   z-index: 1000;
-  background-color: white; /* Color de fondo del botón */
-  color: #263238; /* Color del icono del botón */
+  background-color: white; 
+  color: #263238; 
 }
 
-/* Estilos específicos para el router-outlet */
 .router-outlet-container {
-  margin-top: 56px; /* Ajustar este valor según sea necesario */
+  margin-top: 56px; 
 }
