@@ -32,18 +32,33 @@ const createDefaultUsers = async () => {
 createDefaultUsers();
 
 const register = async (req, res) => {
-  const { email, password, role, telefono } = req.body;
-  const hashedPassword = await bcrypt.hash(password, 10);
-  const newUser = {
-    id: usuarios.length ? usuarios[usuarios.length - 1].id + 1 : 1,
-    email,
-    password: hashedPassword,
-    role,
-    telefono,
-    enabled: true,
-  };
-  usuarios.push(newUser);
-  res.status(201).json(newUser);
+  try {
+    const { email, password, role, telefono } = req.body;
+
+    if (!email || !password || !role || !telefono) {
+      return res.status(400).json({ message: 'Todos los campos son obligatorios' });
+    }
+
+    const existingUser = usuarios.find(user => user.email === email);
+    if (existingUser) {
+      return res.status(400).json({ message: 'El usuario ya existe' });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = {
+      id: usuarios.length ? usuarios[usuarios.length - 1].id + 1 : 1,
+      email,
+      password: hashedPassword,
+      role,
+      telefono,
+      enabled: true,
+    };
+
+    usuarios.push(newUser);
+    res.status(201).json(newUser);
+  } catch (error) {
+    res.status(500).json({ message: 'Error al registrar el usuario', error: error.message });
+  }
 };
 
 const login = async (req, res) => {

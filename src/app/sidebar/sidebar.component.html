@@ -1,0 +1,33 @@
+<mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #sidenav mode="side" opened>
+      <div class="logo-container">
+        <img src="../../assets/logo2.png" alt="Logo de la aplicación">
+      </div>
+      <div class="welcome-msg">¡Bienvenido!</div>
+      <mat-nav-list>
+        <a mat-list-item *ngIf="isLoggedIn && isAdmin" routerLink="/productos" routerLinkActive="active" class="item">
+            <mat-icon>shopping_cart</mat-icon>
+            <span>Productos</span>
+          </a>
+          <!-- Mostrar solo si es panadero -->
+          <a mat-list-item *ngIf="isLoggedIn && isPanadero || isAdmin" routerLink="/ordenes" routerLinkActive="active" class="item">
+            <mat-icon>assignment</mat-icon>
+            <span>Órdenes</span>
+          </a>
+          <!-- Mostrar solo si es user -->
+          <a mat-list-item *ngIf="isLoggedIn && isUser || isAdmin" routerLink="/catalogo" routerLinkActive="active" class="item">
+            <mat-icon>library_books</mat-icon>
+            <span>Catálogo</span>
+          </a>
+          <!-- Enlace de logout siempre visible -->
+          <a mat-list-item *ngIf="isLoggedIn" (click)="logout()" class="item" style="cursor: pointer;">
+            <mat-icon>exit_to_app</mat-icon>
+            <span>Logout</span>
+          </a>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+  

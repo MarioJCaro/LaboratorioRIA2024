@@ -22,14 +22,27 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 import { AddProductDialogComponent } from './dialogs/add-product-dialog/add-product-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from './dialogs/confirm-dialog/confirm-dialog.component';
+import { RegisterComponent } from './componentes/register/register.component';
 
+
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { OrdenesComponent } from './componentes/ordenes/ordenes.component';
+import { CatalogoComponent } from './componentes/catalogo/catalogo.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatNavList } from '@angular/material/list';
+import { MatIcon} from '@angular/material/icon';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     ProductosComponent,
     AddProductDialogComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    RegisterComponent,
+    OrdenesComponent,
+    CatalogoComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +57,12 @@ import { ConfirmDialogComponent } from './dialogs/confirm-dialog/confirm-dialog.
     MatPaginatorModule,
     MatToolbarModule,
     FormsModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSnackBarModule,
+    MatSidenavModule,
+    MatNavList,
+    MatIcon
+    
   ],
   providers: [
     provideClientHydration(),
