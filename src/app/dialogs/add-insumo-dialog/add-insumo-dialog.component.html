@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>{{ data.insumo ? 'Modificar Insumo' : 'Agregar Insumo' }}</h1>
+<div mat-dialog-content>
+  <mat-form-field appearance="fill">
+    <mat-label>Nombre</mat-label>
+    <input matInput [(ngModel)]="insumo.nombre">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Costo</mat-label>
+    <input matInput type="number" [(ngModel)]="insumo.costo" class="no-spinner">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Unidad</mat-label>
+    <input matInput [(ngModel)]="insumo.unidad">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="onSave()">{{ data.insumo ? 'Guardar' : 'Agregar' }}</button>
+</div>

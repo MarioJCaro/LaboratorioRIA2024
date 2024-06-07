@@ -1,0 +1,47 @@
+<mat-toolbar>
+    <span>Lista de Insumos</span>
+    <span class="spacer"></span>
+    <button mat-raised-button color="primary" (click)="openAddInsumoDialog()">Agregar Insumo</button>
+  </mat-toolbar>
+  
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    
+        <!-- ID Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> ID </th>
+          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+    
+        <!-- Nombre Column -->
+        <ng-container matColumnDef="nombre">
+          <th mat-header-cell *matHeaderCellDef> Nombre </th>
+          <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+        </ng-container>
+    
+        <!-- Costo Column -->
+        <ng-container matColumnDef="costo">
+          <th mat-header-cell *matHeaderCellDef> Costo </th>
+          <td mat-cell *matCellDef="let element"> {{element.costo}} </td>
+        </ng-container>
+  
+        <!-- Unidad Column-->
+        <ng-container matColumnDef="unidad">
+          <th mat-header-cell *matHeaderCellDef> Unidad </th>
+          <td mat-cell *matCellDef="let element"> {{element.unidad}} </td>
+        </ng-container>
+  
+        <!-- Acciones Column -->
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef> Acciones </th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-raised-button color="primary" (click)="editInsumo(element)">Editar</button>
+            <button mat-raised-button color="warn" (click)="confirmDelete(element)">Eliminar</button>
+          </td>
+        </ng-container>
+        
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+    

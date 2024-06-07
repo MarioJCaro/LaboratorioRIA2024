@@ -32,6 +32,9 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatNavList } from '@angular/material/list';
 import { MatIcon} from '@angular/material/icon';
+import { InsumosComponent } from './componentes/insumos/insumos.component';
+import { AddInsumoDialogComponent } from './dialogs/add-insumo-dialog/add-insumo-dialog.component';
+import { ConfDelInsumoDialogComponent } from './dialogs/conf-del-insumo-dialog/conf-del-insumo-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,7 +45,10 @@ import { MatIcon} from '@angular/material/icon';
     RegisterComponent,
     OrdenesComponent,
     CatalogoComponent,
-    SidebarComponent
+    SidebarComponent,
+    InsumosComponent,
+    AddInsumoDialogComponent,
+    ConfDelInsumoDialogComponent
   ],
   imports: [
     BrowserModule,
