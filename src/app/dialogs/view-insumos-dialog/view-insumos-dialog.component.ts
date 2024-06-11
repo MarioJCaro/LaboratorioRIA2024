@@ -37,7 +37,7 @@ export class ViewInsumosDialogComponent implements OnInit {
     this.insumosService.getInsumos().subscribe(allInsumos => {
       this.allInsumos = allInsumos || [];
       const insumoRequests = this.data.producto.insumos.map(insumoProducto =>
-        this.insumosService.getInsumo(insumoProducto.id)
+        this.insumosService.getInsumo(insumoProducto.insumoId)
       );
 
       forkJoin(insumoRequests).subscribe(insumos => {
@@ -48,7 +48,7 @@ export class ViewInsumosDialogComponent implements OnInit {
         }));
 
         this.filteredInsumos = this.allInsumos.filter(
-          insumo => !this.data.producto.insumos.some(p => p.id === insumo.id)
+          insumo => !this.data.producto.insumos.some(p => p.insumoId === insumo.id)
         );
       });
     });
@@ -60,7 +60,7 @@ export class ViewInsumosDialogComponent implements OnInit {
       const cantidad: number = this.newInsumoForm.value.cantidad;
 
       const newInsumoProducto: InsumoProducto = {
-        id: selectedInsumo.id,
+        insumoId: selectedInsumo.id,
         cantidad: cantidad
       };
 

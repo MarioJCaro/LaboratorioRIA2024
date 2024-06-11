@@ -12,7 +12,7 @@ export interface Producto {
 }
 
 export interface InsumoProducto {
-  id: number;
+  insumoId: number;
   cantidad: number;
 }
 @Injectable({
@@ -42,7 +42,7 @@ export class ProductosService {
     return this.http.put<Producto>(url, producto);
   }
 
-  addInsumoToProducto(productoId: number, insumoProducto: { id: number, cantidad: number }): Observable<void> {
+  addInsumoToProducto(productoId: number, insumoProducto: { insumoId: number, cantidad: number }): Observable<void> {
     const url = `${this.apiUrl}/productos/${productoId}/insumos`;
     return this.http.post<void>(url, insumoProducto);
   }
