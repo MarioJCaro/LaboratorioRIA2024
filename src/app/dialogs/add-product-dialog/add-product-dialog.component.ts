@@ -22,7 +22,8 @@ export class AddProductDialogComponent {
           nombre: '',
           precio: 0,
           descripcion: '',
-          imagen: ''
+          imagen: '',
+          insumos: []
         };
       }
     }

@@ -3,7 +3,7 @@ import { ProductosService, Producto } from '../../services/productos.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddProductDialogComponent } from '../../dialogs/add-product-dialog/add-product-dialog.component';
 import { ConfirmDialogComponent } from '../../dialogs/confirm-dialog/confirm-dialog.component';
-
+import { ViewInsumosDialogComponent } from '../../dialogs/view-insumos-dialog/view-insumos-dialog.component';
 
 @Component({
   selector: 'app-productos',
@@ -11,7 +11,7 @@ import { ConfirmDialogComponent } from '../../dialogs/confirm-dialog/confirm-dia
   styleUrls: ['./productos.component.scss']
 })
 export class ProductosComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'nombre', 'precio', 'imagen','descripcion', 'acciones'];
+  displayedColumns: string[] = ['id', 'nombre', 'precio', 'imagen','descripcion','insumos', 'acciones'];
   dataSource: Producto[] = [];
 
   constructor(private productosService: ProductosService, public dialog: MatDialog) { }
@@ -80,4 +80,17 @@ export class ProductosComponent implements OnInit {
       }
     });
   }
+
+  openViewInsumosDialog(producto: Producto): void {
+    const dialogRef = this.dialog.open(ViewInsumosDialogComponent, {
+      width: '600px',
+      data: { producto }
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.updateProduct(producto); // Actualiza el producto para guardar los insumos añadidos
+      }
+    });
+  }  
 }

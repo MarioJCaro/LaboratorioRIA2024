@@ -8,8 +8,13 @@ export interface Producto {
   precio: number;
   imagen: string;
   descripcion: string;
+  insumos: InsumoProducto[];
 }
 
+export interface InsumoProducto {
+  id: number;
+  cantidad: number;
+}
 @Injectable({
   providedIn: 'root'
 })
@@ -36,5 +41,9 @@ export class ProductosService {
     const url = `${this.apiUrl}/${producto.id}`;
     return this.http.put<Producto>(url, producto);
   }
-  
+
+  addInsumoToProducto(productoId: number, insumoProducto: { id: number, cantidad: number }): Observable<void> {
+    const url = `${this.apiUrl}/productos/${productoId}/insumos`;
+    return this.http.post<void>(url, insumoProducto);
+  }
 }

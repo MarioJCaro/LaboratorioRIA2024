@@ -35,6 +35,9 @@ import { MatIcon} from '@angular/material/icon';
 import { InsumosComponent } from './componentes/insumos/insumos.component';
 import { AddInsumoDialogComponent } from './dialogs/add-insumo-dialog/add-insumo-dialog.component';
 import { ConfDelInsumoDialogComponent } from './dialogs/conf-del-insumo-dialog/conf-del-insumo-dialog.component';
+import { ViewInsumosDialogComponent } from './dialogs/view-insumos-dialog/view-insumos-dialog.component';
+import { MatOptionModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,7 +51,8 @@ import { ConfDelInsumoDialogComponent } from './dialogs/conf-del-insumo-dialog/c
     SidebarComponent,
     InsumosComponent,
     AddInsumoDialogComponent,
-    ConfDelInsumoDialogComponent
+    ConfDelInsumoDialogComponent,
+    ViewInsumosDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -67,7 +71,9 @@ import { ConfDelInsumoDialogComponent } from './dialogs/conf-del-insumo-dialog/c
     MatSnackBarModule,
     MatSidenavModule,
     MatNavList,
-    MatIcon
+    MatIcon,
+    MatOptionModule,
+    MatSelectModule
     
   ],
   providers: [

@@ -36,4 +36,8 @@ export class InsumosService {
     return this.http.put<Insumo>(url, insumo);
   }
   
+  getInsumo(id: number): Observable<Insumo> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.get<Insumo>(url);
+  }  
 }

@@ -47,23 +47,23 @@ const {insumos, productos} = require('../datos/dataPrIns');
   
   exports.addInsumoToProducto = (req, res) => {
     const { id } = req.params;
-    const { insumoId, cantidad } = req.body;
+    const { id, cantidad } = req.body;
   
     const producto = productos.find(p => p.id == id);
     if (!producto) {
       return res.status(404).json({ message: 'Producto no encontrado' });
     }
   
-    const insumo = insumos.find(i => i.id == insumoId);
+    const insumo = insumos.find(i => i.id == id);
     if (!insumo) {
       return res.status(404).json({ message: 'Insumo no encontrado' });
     }
   
-    const existingInsumo = producto.insumos.find(i => i.id == insumoId);
+    const existingInsumo = producto.insumos.find(i => i.id == id);
     if (existingInsumo) {
       existingInsumo.cantidad = cantidad;
     } else {
-      producto.insumos.push({ id: insumoId, cantidad });
+      producto.insumos.push({ id: id, cantidad });
     }
   
     res.json(producto);
