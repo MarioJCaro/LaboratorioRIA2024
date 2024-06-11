@@ -47,4 +47,6 @@ router.delete('/:id', (req, res) => {
   hospitalesController.deleteHospital(req, res);
 });
 
+
+
 module.exports = router;

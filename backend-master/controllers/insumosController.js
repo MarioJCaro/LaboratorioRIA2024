@@ -1,8 +1,4 @@
-let insumos = [
-    { id: 1, nombre: 'Harina', unidad: 'Kg', costo: 100 },
-    { id: 2, nombre: 'Sal', unidad: 'Kg', costo: 300 }
-  ];
-  
+const {insumos, productos} = require('../datos/dataPrIns');
   exports.getInsumos = (req, res) => {               
     res.json(insumos);
   };
@@ -39,7 +35,17 @@ let insumos = [
   exports.deleteInsumo = (req, res) => {
     const { id } = req.params;
     const insumoIndex = insumos.findIndex(p => p.id == id);
+  
     if (insumoIndex !== -1) {
+      // Verificar si el insumo está asignado a algún producto
+      const isInsumoInUse = productos.some(producto => 
+        producto.insumos.some(insumo => insumo.id == id)
+      );
+  
+      if (isInsumoInUse) {
+        return res.status(400).json({ message: 'Insumo en uso, no se puede eliminar' });
+      }
+  
       const deletedInsumo = insumos.splice(insumoIndex, 1);
       res.json(deletedInsumo);
     } else {
@@ -47,3 +53,4 @@ let insumos = [
     }
   };
   
+  exports.insumos = insumos;

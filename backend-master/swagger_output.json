@@ -561,6 +561,105 @@
         ]
       }
     },
+    "/productos/productos/{id}/insumos": {
+      "post": {
+        "tags": [
+          "Productos"
+        ],
+        "summary": "Agrega un insumo a un producto",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID del producto"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Add insumo to product.",
+            "schema": {
+              "$ref": "#/definitions/InsumoProducto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/productos/productos/{id}/insumos/{insumoId}": {
+      "delete": {
+        "tags": [
+          "Productos"
+        ],
+        "summary": "Quita un insumo de un producto",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID del producto"
+          },
+          {
+            "name": "insumoId",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID del insumo"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
     "/insumos/": {
       "get": {
         "tags": [
@@ -734,6 +833,199 @@
           "200": {
             "description": "OK"
           },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/ordenes/": {
+      "get": {
+        "tags": [
+          "Ordenes"
+        ],
+        "summary": "Obtiene la lista de ordenes",
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Ordenes"
+        ],
+        "summary": "Agrega un nuevo orden",
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Add new product.",
+            "schema": {
+              "$ref": "#/definitions/Orden"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/ordenes/{id}": {
+      "get": {
+        "tags": [
+          "Ordenes"
+        ],
+        "summary": "Obtiene un orden por ID",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID del orden"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Ordenes"
+        ],
+        "summary": "Actualiza un orden existente",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID del orden"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Update product.",
+            "schema": {
+              "$ref": "#/definitions/Orden"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Ordenes"
+        ],
+        "summary": "Elimina un orden",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID del orden"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
           "403": {
             "description": "Forbidden"
           },
@@ -890,6 +1182,11 @@
         "precio": {
           "type": "number",
           "example": 9.99
+        },
+        "insumos": {
+          "type": "array",
+          "example": [],
+          "items": {}
         }
       }
     },
@@ -911,6 +1208,44 @@
         "costo": {
           "type": "number",
           "example": 100
+        }
+      }
+    },
+    "Orden": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number",
+          "example": 1
+        },
+        "nombre": {
+          "type": "string",
+          "example": "Orden Ejemplo"
+        },
+        "descripcion": {
+          "type": "string",
+          "example": "Descripción de la orden"
+        },
+        "imagen": {
+          "type": "string",
+          "example": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA..."
+        },
+        "precio": {
+          "type": "number",
+          "example": 99.99
+        }
+      }
+    },
+    "InsumoProducto": {
+      "type": "object",
+      "properties": {
+        "insumoId": {
+          "type": "number",
+          "example": 1
+        },
+        "cantidad": {
+          "type": "number",
+          "example": 2
         }
       }
     }

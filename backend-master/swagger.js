@@ -55,13 +55,25 @@ const doc = {
       nombre: "Producto Ejemplo",
       descripcion: "Descripción del producto",
       imagen: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA...",
-      precio: 9.99
+      precio: 9.99,
+      insumos: []
     },
     Insumo: {
       id: 1,
       nombre: "Insumo Ejemplo",
       unidad: "Kg",
       costo: 100
+    },
+    Orden: {
+      id: 1,
+      nombre: "Orden Ejemplo",
+      descripcion: "Descripción de la orden",
+      imagen: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA...",
+      precio: 99.99
+    },
+    InsumoProducto: {
+      insumoId: 1,
+      cantidad: 2.0
     },
   }
 };

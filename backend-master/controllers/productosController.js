@@ -1,7 +1,4 @@
-let productos = [
-    { id: 1, nombre: 'Producto 1', descripcion: 'Descripción 1', imagen: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA...', precio: 10.0 },
-    { id: 2, nombre: 'Producto 2', descripcion: 'Descripción 2', imagen: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA...', precio: 20.0 }
-  ];
+const {insumos, productos} = require('../datos/dataPrIns');
   
   exports.getProductos = (req, res) => {
     res.json(productos);
@@ -20,6 +17,7 @@ let productos = [
   exports.createProducto = (req, res) => {
     const newProducto = req.body;
     newProducto.id = productos.length ? productos[productos.length - 1].id + 1 : 1;
+    newProducto.insumos = [];
     productos.push(newProducto);
     res.status(201).json(newProducto);
   };
@@ -47,3 +45,45 @@ let productos = [
     }
   };
   
+  exports.addInsumoToProducto = (req, res) => {
+    const { id } = req.params;
+    const { insumoId, cantidad } = req.body;
+  
+    const producto = productos.find(p => p.id == id);
+    if (!producto) {
+      return res.status(404).json({ message: 'Producto no encontrado' });
+    }
+  
+    const insumo = insumos.find(i => i.id == insumoId);
+    if (!insumo) {
+      return res.status(404).json({ message: 'Insumo no encontrado' });
+    }
+  
+    const existingInsumo = producto.insumos.find(i => i.id == insumoId);
+    if (existingInsumo) {
+      existingInsumo.cantidad = cantidad;
+    } else {
+      producto.insumos.push({ id: insumoId, cantidad });
+    }
+  
+    res.json(producto);
+  };
+  
+  exports.removeInsumoFromProducto = (req, res) => {
+    const { id, insumoId } = req.params;
+  
+    const producto = productos.find(p => p.id == id);
+    if (!producto) {
+      return res.status(404).json({ message: 'Producto no encontrado' });
+    }
+  
+    const insumoIndex = producto.insumos.findIndex(i => i.id == insumoId);
+    if (insumoIndex === -1) {
+      return res.status(404).json({ message: 'Insumo no encontrado en el producto' });
+    }
+  
+    producto.insumos.splice(insumoIndex, 1);
+    res.json(producto);
+  };
+  
+  exports.productos = productos;
