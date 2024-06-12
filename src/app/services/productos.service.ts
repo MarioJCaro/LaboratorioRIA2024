@@ -43,7 +43,12 @@ export class ProductosService {
   }
 
   addInsumoToProducto(productoId: number, insumoProducto: { insumoId: number, cantidad: number }): Observable<void> {
-    const url = `${this.apiUrl}/productos/${productoId}/insumos`;
+    const url = `${this.apiUrl}/${productoId}/insumos`;
     return this.http.post<void>(url, insumoProducto);
+  }
+
+  removeInsumoFromProducto(productoId: number, insumoId: number): Observable<void> {
+    const url = `${this.apiUrl}/${productoId}/insumos/${insumoId}`;
+    return this.http.delete<void>(url);
   }
 }

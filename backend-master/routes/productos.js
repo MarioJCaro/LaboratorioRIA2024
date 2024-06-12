@@ -50,7 +50,7 @@ router.delete('/:id', verifyToken, isAdmin, (req, res) => {
 });
 
 // Rutas para agregar y quitar insumos de productos
-router.post('/productos/:id/insumos', verifyToken, isAdmin, (req, res) => {
+router.post('/:id/insumos', verifyToken, isAdmin, (req, res) => {
   /* #swagger.summary = 'Agrega un insumo a un producto' */
   /* #swagger.tags = ['Productos'] */
   /* #swagger.security = [{ "BearerAuth": [] }] */
@@ -64,7 +64,7 @@ router.post('/productos/:id/insumos', verifyToken, isAdmin, (req, res) => {
 }
 );
 
-router.delete('/productos/:id/insumos/:insumoId', verifyToken, isAdmin, (req, res) => {
+router.delete('/:id/insumos/:insumoId', verifyToken, isAdmin, (req, res) => {
   /* #swagger.summary = 'Quita un insumo de un producto' */
   /* #swagger.tags = ['Productos'] */
   /* #swagger.security = [{ "BearerAuth": [] }] */

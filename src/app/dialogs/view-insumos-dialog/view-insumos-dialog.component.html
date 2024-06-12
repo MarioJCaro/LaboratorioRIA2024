@@ -1,39 +1,61 @@
-<h1 mat-dialog-title>Insumos para {{ data.producto.nombre }}</h1>
+<h1 mat-dialog-title>Insumos del Producto
+  <button mat-icon-button class="close-button" (click)="onClose()">
+    <mat-icon>close</mat-icon>
+  </button>
+</h1>
 <div mat-dialog-content>
   <table mat-table [dataSource]="insumos" class="mat-elevation-z8">
-    <ng-container matColumnDef="nombre">
-      <th mat-header-cell *matHeaderCellDef> Nombre </th>
-      <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+
+     <!-- Nombre Column -->
+     <ng-container matColumnDef="ingrediente">
+      <th mat-header-cell *matHeaderCellDef class="left-align"> Ingrediente </th>
+      <td mat-cell *matCellDef="let element" class="left-align"> {{element.insumo.nombre}} - {{element.cantidad}} {{element.insumo.unidad}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="unidad">
-      <th mat-header-cell *matHeaderCellDef> Unidad </th>
-      <td mat-cell *matCellDef="let element"> {{element.unidad}} </td>
+    <!-- Acciones Column -->
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef class="left-align"> Acciones </th>
+      <td mat-cell *matCellDef="let element" class="left-align">
+        <button mat-icon-button color="warn" (click)="removeInsumo(element)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
     </ng-container>
 
-    <ng-container matColumnDef="cantidad">
-      <th mat-header-cell *matHeaderCellDef> Cantidad </th>
-      <td mat-cell *matCellDef="let element"> {{element.cantidad}} </td>
-    </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="['nombre', 'unidad', 'cantidad']"></tr>
-    <tr mat-row *matRowDef="let row; columns: ['nombre', 'unidad', 'cantidad'];"></tr>
+    <tr mat-header-row *matHeaderRowDef="['ingrediente', 'acciones']"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['ingrediente', 'acciones'];"></tr>
   </table>
+
+  <div>
+    <button mat-raised-button 
+            [style.background-color]="showAddInsumo ? 'red' : 'greenyellow'"
+            [style.font-size]="showAddInsumo ? 'large' : 'x-large'"
+            [style.font-weight]="showAddInsumo ? 'bold' : 'normal'"
+
+            style="margin-top: 2%;"
+            (click)="toggleAddInsumo()">
+      {{ showAddInsumo ? '-' : '+' }}
+    </button>
+  </div>
   
-  <form [formGroup]="newInsumoForm" (ngSubmit)="addInsumo()">
+  
+  <div *ngIf="showAddInsumo">
+    <h2>Agregar Insumo</h2>
     <mat-form-field>
       <mat-label>Insumo</mat-label>
-      <mat-select formControlName="insumo">
-        <mat-option *ngFor="let insumo of filteredInsumos" [value]="insumo">{{ insumo.nombre }}</mat-option>
+      <mat-select [(value)]="newInsumoId">
+        <mat-option *ngFor="let insumo of availableInsumos" [value]="insumo.id">
+          {{insumo.nombre}}
+        </mat-option>
       </mat-select>
     </mat-form-field>
+
     <mat-form-field>
       <mat-label>Cantidad</mat-label>
-      <input matInput type="number" formControlName="cantidad">
+      <input matInput type="number" [(ngModel)]="newCantidad">
     </mat-form-field>
-    <button mat-raised-button color="primary" type="submit" [disabled]="newInsumoForm.invalid">Agregar Insumo</button>
-  </form>
-</div>
-<div mat-dialog-actions>
-  <button mat-button (click)="dialogRef.close()">Cerrar</button>
+
+    <button mat-raised-button color="primary" (click)="addNewInsumo()">Agregar</button>
+  </div>
 </div>

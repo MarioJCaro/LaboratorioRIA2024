@@ -81,16 +81,10 @@ export class ProductosComponent implements OnInit {
     });
   }
 
-  openViewInsumosDialog(producto: Producto): void {
-    const dialogRef = this.dialog.open(ViewInsumosDialogComponent, {
-      width: '600px',
+  viewInsumos(producto: Producto): void {
+    this.dialog.open(ViewInsumosDialogComponent, {
+      width: '50%',
       data: { producto }
     });
-  
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.updateProduct(producto); // Actualiza el producto para guardar los insumos añadidos
-      }
-    });
-  }  
+  }
 }

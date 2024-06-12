@@ -1,9 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { InsumosService, Insumo } from '../../services/insumos.service';
-import { Producto, InsumoProducto, ProductosService } from '../../services/productos.service';
-import { forkJoin } from 'rxjs';
+import { Producto, ProductosService } from '../../services/productos.service';
 
 @Component({
   selector: 'app-view-insumos-dialog',
@@ -11,76 +9,72 @@ import { forkJoin } from 'rxjs';
   styleUrls: ['./view-insumos-dialog.component.scss']
 })
 export class ViewInsumosDialogComponent implements OnInit {
-  insumos: { nombre: string, unidad: string, cantidad: number }[] = [];
-  allInsumos: Insumo[] = [];
-  filteredInsumos: Insumo[] = [];
-  newInsumoForm: FormGroup;
+  insumos: { insumo: Insumo, cantidad: number }[] = [];
 
+  availableInsumos: Insumo[] = [];
+  newInsumoId: number | null = null;
+  newCantidad: number = 1;
+  showAddInsumo = false;
   constructor(
     public dialogRef: MatDialogRef<ViewInsumosDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { producto: Producto },
     private insumosService: InsumosService,
-    private productosService: ProductosService,
-    private fb: FormBuilder
-  ) {
-    this.newInsumoForm = this.fb.group({
-      insumo: [null, Validators.required],
-      cantidad: ['', [Validators.required, Validators.min(1)]]
-    });
-  }
+    private productosService: ProductosService
+  ) { }
 
   ngOnInit(): void {
     this.loadInsumos();
+    this.loadAvailableInsumos();
   }
 
   loadInsumos(): void {
-    this.insumosService.getInsumos().subscribe(allInsumos => {
-      this.allInsumos = allInsumos || [];
-      const insumoRequests = this.data.producto.insumos.map(insumoProducto =>
-        this.insumosService.getInsumo(insumoProducto.insumoId)
-      );
+    const insumoRequests = this.data.producto.insumos.map(insumoData =>
+      this.insumosService.getInsumo(insumoData.insumoId).toPromise()
+        .then(insumo => insumo ? { insumo, cantidad: insumoData.cantidad } : undefined)
+    );
 
-      forkJoin(insumoRequests).subscribe(insumos => {
-        this.insumos = insumos.map((insumo, index) => ({
-          nombre: insumo.nombre,
-          unidad: insumo.unidad,
-          cantidad: this.data.producto.insumos[index].cantidad
-        }));
-
-        this.filteredInsumos = this.allInsumos.filter(
-          insumo => !this.data.producto.insumos.some(p => p.insumoId === insumo.id)
-        );
-      });
+    Promise.all(insumoRequests).then(insumos => {
+      // Filtrar los valores undefined
+      this.insumos = insumos.filter((insumo): insumo is { insumo: Insumo, cantidad: number } => insumo !== undefined);
     });
   }
 
-  addInsumo(): void {
-    if (this.newInsumoForm.valid) {
-      const selectedInsumo: Insumo = this.newInsumoForm.value.insumo;
-      const cantidad: number = this.newInsumoForm.value.cantidad;
+  loadAvailableInsumos(): void {
+    this.insumosService.getInsumos().subscribe(allInsumos => {
+      const currentInsumoIds = this.insumos.map(i => i.insumo.id);
+      this.availableInsumos = allInsumos.filter(insumo => !currentInsumoIds.includes(insumo.id));
+      console.log(this.availableInsumos);
+    });
+  }
 
-      const newInsumoProducto: InsumoProducto = {
-        insumoId: selectedInsumo.id,
-        cantidad: cantidad
-      };
-
-      this.productosService.addInsumoToProducto(this.data.producto.id, newInsumoProducto).subscribe(() => {
-        // Actualizar el producto en el frontend
-        this.data.producto.insumos.push(newInsumoProducto);
-
-        // Añadir el insumo al array local
-        const insumo = {
-          nombre: selectedInsumo.nombre,
-          unidad: selectedInsumo.unidad,
-          cantidad: cantidad
-        };
-
-        this.insumos.push(insumo);
-        this.newInsumoForm.reset();
-
-        // Actualizar el filtro de insumos
-        this.filteredInsumos = this.filteredInsumos.filter(insumo => insumo.id !== selectedInsumo.id);
-      });
+  addNewInsumo(): void {
+    if (this.newInsumoId !== null) {
+      const selectedInsumo = this.availableInsumos.find(insumo => insumo.id === this.newInsumoId);
+      if (selectedInsumo) {
+        this.productosService.addInsumoToProducto(this.data.producto.id, { insumoId: this.newInsumoId, cantidad: this.newCantidad })
+          .subscribe(() => {
+            this.insumos.push({ insumo: selectedInsumo, cantidad: this.newCantidad });
+            this.newInsumoId = null;
+            this.newCantidad = 1;
+            this.showAddInsumo = false;
+            this.loadAvailableInsumos(); 
+            this.insumos = [...this.insumos];
+          });
+      }
     }
+  }
+  removeInsumo(element: { insumo: Insumo, cantidad: number }): void {
+    this.productosService.removeInsumoFromProducto(this.data.producto.id, element.insumo.id)
+      .subscribe(() => {
+        this.insumos = this.insumos.filter(i => i.insumo.id !== element.insumo.id);
+        this.loadAvailableInsumos();
+      });
+  }
+
+  toggleAddInsumo(): void {
+    this.showAddInsumo = !this.showAddInsumo;
+  }
+  onClose(): void {
+    this.dialogRef.close();
   }
 }
