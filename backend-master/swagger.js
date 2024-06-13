@@ -75,6 +75,12 @@ const doc = {
       insumoId: 1,
       cantidad: 2.0
     },
+    ProductoPaginado: {
+      page: 1,
+      limit: 10,
+      total: 100,
+      data: []
+    },
   }
 };
 

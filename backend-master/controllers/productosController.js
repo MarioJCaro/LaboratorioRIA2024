@@ -75,7 +75,7 @@ exports.removeInsumoFromProducto = (req, res) => {
 
     const producto = productos.find(p => p.id == id);
     if (!producto) {
-        return res.status(404).json({ message: 'Producto no encontrado' });
+        return res.status(404).json({ message: 'Producto no encontrado 5' });
     }
 
     const insumoIndex = producto.insumos.findIndex(i => i.insumoId == insumoId);
@@ -86,3 +86,21 @@ exports.removeInsumoFromProducto = (req, res) => {
     producto.insumos.splice(insumoIndex, 1);
     res.json(producto);
 };
+
+// productosController.js
+exports.getProductosPaginado = (req, res) => {
+    const { page = 1, limit = 10 } = req.query;
+
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
+
+    const paginatedResults = productos.slice(startIndex, endIndex);
+
+    res.json({
+        page: parseInt(page),
+        limit: parseInt(limit),
+        total: productos.length,
+        data: paginatedResults
+    });
+};
+

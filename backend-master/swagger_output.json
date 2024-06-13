@@ -371,6 +371,50 @@
         ]
       }
     },
+    "/productos/paginado": {
+      "get": {
+        "tags": [
+          "Productos"
+        ],
+        "summary": "Obtiene la lista de productos paginados",
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "description": "Número de página",
+            "type": "integer",
+            "required": true,
+            "in": "query"
+          },
+          {
+            "name": "limit",
+            "description": "Cantidad de productos por página",
+            "type": "integer",
+            "required": true,
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Productos paginados",
+            "schema": {
+              "$ref": "#/definitions/ProductoPaginado"
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
     "/productos/": {
       "get": {
         "tags": [
@@ -1246,6 +1290,28 @@
         "cantidad": {
           "type": "number",
           "example": 2
+        }
+      }
+    },
+    "ProductoPaginado": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "number",
+          "example": 1
+        },
+        "limit": {
+          "type": "number",
+          "example": 10
+        },
+        "total": {
+          "type": "number",
+          "example": 100
+        },
+        "data": {
+          "type": "array",
+          "example": [],
+          "items": {}
         }
       }
     }
