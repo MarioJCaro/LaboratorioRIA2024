@@ -9,6 +9,8 @@ router.get('/paginado', verifyToken, isAdmin, (req, res) => {
     /* #swagger.tags = ['Productos'] */
     /* #swagger.parameters['page'] = { description: 'Número de página', type: 'integer', required: true } */
     /* #swagger.parameters['limit'] = { description: 'Cantidad de productos por página', type: 'integer', required: true } */
+    /* #swagger.parameters['filterField'] = { description: 'Campo por el que se quiere filtrar', type: 'string' } */
+    /* #swagger.parameters['filterValue'] = { description: 'Valor del filtro', type: 'string' } */
     // Schema de respuesta
     /* #swagger.responses[200] = {
         schema: { $ref: '#/definitions/ProductoPaginado' },

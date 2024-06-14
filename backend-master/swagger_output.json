@@ -397,6 +397,18 @@
             "type": "integer",
             "required": true,
             "in": "query"
+          },
+          {
+            "name": "filterField",
+            "description": "Campo por el que se quiere filtrar",
+            "type": "string",
+            "in": "query"
+          },
+          {
+            "name": "filterValue",
+            "description": "Valor del filtro",
+            "type": "string",
+            "in": "query"
           }
         ],
         "responses": {

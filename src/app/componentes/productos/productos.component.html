@@ -1,66 +1,91 @@
-<mat-toolbar>
-  <span>Lista de Productos</span>
-  <span class="spacer"></span>
-  <button mat-raised-button color="primary" (click)="openAddProductDialog()">Agregar Producto</button>
-</mat-toolbar>
+<!-- productos.component.html -->
+<div class="container">
+  <div class="header">
+    <div class="title">
+      <h1>Productos</h1>
+    </div>
+    <div class="actions">
+      <mat-form-field appearance="fill" class="filter" style="margin-right: 1rem;">
+        <mat-label>Filtro</mat-label>
+        <mat-select [(value)]="filterField" (selectionChange)="onFilterChange()">
+          <mat-option value="nombre">Nombre</mat-option>
+          <!-- Agregar más opciones de filtro si es necesario -->
+        </mat-select>
+      </mat-form-field>
 
-<div class="mat-elevation-z8">
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <!-- Campo de búsqueda dinámico -->
+      <ng-container>
+        <mat-form-field appearance="fill" class="search" style="margin-right: 1rem;">
+          <mat-label>Buscar</mat-label>
+          <input matInput [(ngModel)]="filterValue" (input)="onFilterChange()">
+        </mat-form-field>
+      </ng-container>
 
-    <!-- ID Column -->
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef> ID </th>
-      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-    </ng-container>
+      <button mat-raised-button color="primary" (click)="openAddProductDialog()">Agregar Producto</button>
+    </div>
+  </div>
+  <div class="table-container">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-    <!-- Nombre Column -->
-    <ng-container matColumnDef="nombre">
-      <th mat-header-cell *matHeaderCellDef> Nombre </th>
-      <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
-    </ng-container>
+      <!-- ID Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> ID </th>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+      </ng-container>
 
-    <!-- Precio Column -->
-    <ng-container matColumnDef="precio">
-      <th mat-header-cell *matHeaderCellDef> Precio </th>
-      <td mat-cell *matCellDef="let element"> {{element.precio}} </td>
-    </ng-container>
+      <!-- Nombre Column -->
+      <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef> Nombre </th>
+        <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+      </ng-container>
 
-    <!-- Imagen Column-->
-    <ng-container matColumnDef="imagen">
-      <th mat-header-cell *matHeaderCellDef> Imagen </th>
-      <td mat-cell *matCellDef="let element"> <img src={{element.imagen}} width="100" height="100"> </td>
-    </ng-container>
+      <!-- Precio Column -->
+      <ng-container matColumnDef="precio">
+        <th mat-header-cell *matHeaderCellDef> Precio </th>
+        <td mat-cell *matCellDef="let element"> {{element.precio}} </td>
+      </ng-container>
 
-    <!-- Descripción Column -->
-    <ng-container matColumnDef="descripcion">
-      <th mat-header-cell *matHeaderCellDef> Descripción </th>
-      <td mat-cell *matCellDef="let element"> {{element.descripcion}} </td>
-    </ng-container>
+      <!-- Imagen Column-->
+      <ng-container matColumnDef="imagen">
+        <th mat-header-cell *matHeaderCellDef> Imagen </th>
+        <td mat-cell *matCellDef="let element"> <img src={{element.imagen}} width="100" height="100"> </td>
+      </ng-container>
 
-    <!-- Insumos Column -->
-    <ng-container matColumnDef="insumos">
-      <th mat-header-cell *matHeaderCellDef> Insumos </th>
-      <td mat-cell *matCellDef="let element">
-        <button mat-raised-button color="accent" (click)="viewInsumos(element)">Ver Insumos</button>
-      </td>
-    </ng-container>
+      <!-- Descripción Column -->
+      <ng-container matColumnDef="descripcion">
+        <th mat-header-cell *matHeaderCellDef> Descripción </th>
+        <td mat-cell *matCellDef="let element"> {{element.descripcion}} </td>
+      </ng-container>
 
-    <!-- Acciones Column -->
-    <ng-container matColumnDef="acciones">
-      <th mat-header-cell *matHeaderCellDef> Acciones </th>
-      <td mat-cell *matCellDef="let element">
-        <button mat-raised-button color="primary" (click)="editProduct(element)">Editar</button>
-        <button mat-raised-button color="warn" (click)="confirmDelete(element)">Eliminar</button>
-      </td>
-    </ng-container>
+      <!-- Insumos Column -->
+      <ng-container matColumnDef="insumos">
+        <th mat-header-cell *matHeaderCellDef> Insumos </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button style="background-color: skyblue; color: #000;" (click)="viewInsumos(element)">
+            <mat-icon>list</mat-icon>
+          </button> 
+        </td>
+      </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
+      <!-- Acciones Column -->
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef> Acciones </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button style="background-color: rgb(214, 195, 25); color: #000;" (click)="editProduct(element)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button style="background-color: #8d2828; color: #000;" (click)="confirmDelete(element)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
 
-  <mat-paginator [length]="total"
-                 [pageSize]="limit"
-                 [pageSizeOptions]="[5, 10, 20]"
-                 (page)="changePage($event)">
-  </mat-paginator>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator [length]="total" [pageSize]="limit" [pageSizeOptions]="[5, 10, 20]" (page)="changePage($event)">
+    </mat-paginator>
+    
+  </div>
 </div>

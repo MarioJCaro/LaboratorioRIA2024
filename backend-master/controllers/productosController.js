@@ -89,18 +89,28 @@ exports.removeInsumoFromProducto = (req, res) => {
 
 // productosController.js
 exports.getProductosPaginado = (req, res) => {
-    const { page = 1, limit = 10 } = req.query;
+    const { page = 1, limit = 10, filterField, filterValue } = req.query;
 
     const startIndex = (page - 1) * limit;
     const endIndex = page * limit;
 
-    const paginatedResults = productos.slice(startIndex, endIndex);
+    let filteredProducts = productos;
+
+    // Aplicar filtros si existen
+    if (filterField && filterValue) {
+        filteredProducts = productos.filter(producto => 
+            producto[filterField] && producto[filterField].toString().toLowerCase().includes(filterValue.toLowerCase())
+        );
+    }
+
+    const paginatedResults = filteredProducts.slice(startIndex, endIndex);
 
     res.json({
         page: parseInt(page),
         limit: parseInt(limit),
-        total: productos.length,
+        total: filteredProducts.length,
         data: paginatedResults
     });
 };
+
 

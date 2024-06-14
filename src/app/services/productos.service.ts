@@ -32,9 +32,16 @@ export class ProductosService {
 
   constructor(private http: HttpClient) {}
 
-  getProductosPaginado(page: number, limit: number): Observable<any> {
-    const url = `${this.apiUrl}/paginado?page=${page}&limit=${limit}`;
-    return this.http.get<any>(url);
+  getProductosPaginado(page: number, limit: number, filterField?: string, filterValue?: string): Observable<ProductoResponse> {
+    let params = new HttpParams()
+      .set('page', page.toString())
+      .set('limit', limit.toString());
+
+    if (filterField && filterValue) {
+      params = params.set('filterField', filterField).set('filterValue', filterValue);
+    }
+
+    return this.http.get<ProductoResponse>(`${this.apiUrl}/paginado`, { params });
   }
   addProducto(producto: Producto): Observable<Producto> {
     return this.http.post<Producto>(this.apiUrl, producto);

@@ -1,3 +1,4 @@
+// productos.component.ts
 import { Component, OnInit } from '@angular/core';
 import { ProductosService, Producto } from '../../services/productos.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -5,6 +6,7 @@ import { AddProductDialogComponent } from '../../dialogs/add-product-dialog/add-
 import { ConfirmDialogComponent } from '../../dialogs/confirm-dialog/confirm-dialog.component';
 import { ViewInsumosDialogComponent } from '../../dialogs/view-insumos-dialog/view-insumos-dialog.component';
 import { PageEvent } from '@angular/material/paginator';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-productos',
@@ -13,19 +15,37 @@ import { PageEvent } from '@angular/material/paginator';
 })
 export class ProductosComponent implements OnInit {
   displayedColumns: string[] = ['id', 'nombre', 'precio', 'imagen', 'descripcion', 'insumos', 'acciones'];
+  mobileColumns: string[] = ['id', 'nombre', 'insumos', 'acciones'];
   dataSource: Producto[] = [];
   page = 1;
   limit = 10;
   total = 0;
+  filterField = 'nombre';
+  filterValue = '';
+  isMobile: boolean = false;
 
-  constructor(private productosService: ProductosService, public dialog: MatDialog) {}
+  constructor(
+    private productosService: ProductosService,
+    public dialog: MatDialog,
+    private breakpointObserver: BreakpointObserver
+  ) {}
 
   ngOnInit(): void {
     this.loadProductos();
+
+    this.breakpointObserver.observe([Breakpoints.XSmall ,Breakpoints.Small])
+      .subscribe(result => {
+        this.isMobile = result.matches;
+        this.setDisplayedColumns();
+      });
+  }
+
+  setDisplayedColumns(): void {
+    this.displayedColumns = this.isMobile ? this.mobileColumns : ['id', 'nombre', 'precio', 'imagen', 'descripcion', 'insumos', 'acciones'];
   }
 
   loadProductos(): void {
-    this.productosService.getProductosPaginado(this.page, this.limit).subscribe(data => {
+    this.productosService.getProductosPaginado(this.page, this.limit, this.filterField, this.filterValue).subscribe(data => {
       this.dataSource = data.data;
       this.total = data.total;
     });
@@ -99,6 +119,11 @@ export class ProductosComponent implements OnInit {
   changePage(event: PageEvent): void {
     this.page = event.pageIndex + 1;
     this.limit = event.pageSize;
+    this.loadProductos();
+  }
+
+  onFilterChange(): void {
+    this.page = 1; // Reiniciar a la primera página cuando se aplica un filtro
     this.loadProductos();
   }
 }
