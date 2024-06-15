@@ -1,1 +1,23 @@
-<p>catalogo works!</p>
+<div class="catalogo-container">
+  <div class="grid">
+    <div class="grid-item" *ngFor="let producto of productos">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>{{ producto.nombre }}</mat-card-title>
+          <mat-card-subtitle>{{ producto.precio | currency }}</mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image [src]="producto.imagen" alt="{{ producto.nombre }}">
+        <mat-card-content style="margin-top: 1rem;">
+          <p>{{ producto.descripcion }}</p>
+        </mat-card-content>
+        <mat-card-actions style="display: flex; justify-content: center;">
+          <button mat-button (click)="agregarAlCarrito(producto)">
+            <mat-icon>add_shopping_cart</mat-icon>
+            Añadir al carrito
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>
+<mat-paginator [length]="totalProductos" [pageSize]="pageSize" (page)="cargarPagina($event)"></mat-paginator>

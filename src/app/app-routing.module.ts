@@ -7,6 +7,7 @@ import { OrdenesComponent } from './componentes/ordenes/ordenes.component';
 import { CatalogoComponent } from './componentes/catalogo/catalogo.component';
 import { authGuard } from './auth.guard';
 import { InsumosComponent } from './componentes/insumos/insumos.component';
+import { CartComponent } from './componentes/cart/cart.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -15,6 +16,7 @@ const routes: Routes = [
   {path: 'insumos', component: InsumosComponent, canActivate: [authGuard], data: { roles: ['ADMIN'] }},
   {path: 'ordenes', component: OrdenesComponent, canActivate: [authGuard], data: { roles: ['PANADERO'] }},
   {path: 'catalogo', component: CatalogoComponent, canActivate: [authGuard], data: { roles: ['USER'] } },
+  {path: 'carrito', component: CartComponent, canActivate: [authGuard], data: { roles: ['USER'] } },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
 ];
 

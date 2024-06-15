@@ -30,7 +30,7 @@ import { OrdenesComponent } from './componentes/ordenes/ordenes.component';
 import { CatalogoComponent } from './componentes/catalogo/catalogo.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatNavList } from '@angular/material/list';
+import { MatListItem, MatListModule, MatNavList } from '@angular/material/list';
 import { MatIcon} from '@angular/material/icon';
 import { InsumosComponent } from './componentes/insumos/insumos.component';
 import { AddInsumoDialogComponent } from './dialogs/add-insumo-dialog/add-insumo-dialog.component';
@@ -38,6 +38,8 @@ import { ConfDelInsumoDialogComponent } from './dialogs/conf-del-insumo-dialog/c
 import { ViewInsumosDialogComponent } from './dialogs/view-insumos-dialog/view-insumos-dialog.component';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { CartComponent } from './componentes/cart/cart.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,7 +54,8 @@ import { MatSelectModule } from '@angular/material/select';
     InsumosComponent,
     AddInsumoDialogComponent,
     ConfDelInsumoDialogComponent,
-    ViewInsumosDialogComponent
+    ViewInsumosDialogComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,
@@ -73,7 +76,9 @@ import { MatSelectModule } from '@angular/material/select';
     MatNavList,
     MatIcon,
     MatOptionModule,
-    MatSelectModule
+    MatSelectModule,
+    MatGridListModule,
+    MatListModule
     
   ],
   providers: [

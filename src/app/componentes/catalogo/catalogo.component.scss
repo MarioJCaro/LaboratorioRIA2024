@@ -1,0 +1,54 @@
+.catalogo-container {
+  padding: 16px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 10px;
+}
+
+.grid-item {
+  display: flex;
+  justify-content: center;
+}
+
+mat-card {
+  width: 100%;
+}
+
+mat-card img {
+  width: 100%;
+  height: 200px; /* Altura fija */
+  object-fit: cover; /* Mantiene el aspecto de la imagen y la recorta si es necesario */
+}
+
+@media (min-width: 600px) {
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+
+  mat-card img {
+    height: 150px; /* Ajustar la altura según sea necesario para dispositivos más pequeños */
+  }
+}
+
+@media (min-width: 960px) {
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+
+  mat-card img {
+    height: 200px; /* Ajustar la altura según sea necesario para dispositivos medianos */
+  }
+}
+
+@media (min-width: 1280px) {
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+
+  mat-card img {
+    height: 250px; /* Ajustar la altura según sea necesario para dispositivos grandes */
+  }
+}

@@ -28,9 +28,14 @@
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <button mat-icon-button (click)="sidenav.toggle()" class="menu-button">
-      <mat-icon>menu</mat-icon>
-    </button>
+    <div class="top-bar">
+      <button mat-icon-button (click)="sidenav.toggle()" class="menu-button">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <button mat-icon-button (click)="navigateToCart()" class="cart-button">
+        <mat-icon>shopping_cart</mat-icon>
+      </button>
+    </div>
     <div class="router-outlet-container">
       <router-outlet></router-outlet>
     </div>

@@ -11,7 +11,10 @@ const ordenesRoutes = require('./routes/ordenes');
 const app = express();
 const port = 3000;
 
-app.use(bodyParser.json());
+// Aumentar el límite del tamaño del payload
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+
 app.use(cors());
 
 app.use('/hospitales', hospitalesRoutes);

@@ -43,6 +43,16 @@ export class ProductosService {
 
     return this.http.get<ProductoResponse>(`${this.apiUrl}/paginado`, { params });
   }
+  //Get productos
+  getProductos(): Observable<Producto[]> {
+    return this.http.get<Producto[]>(this.apiUrl);
+  }
+  //Get producto
+  getProducto(id: number): Observable<Producto> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.get<Producto>(url);
+  }
+
   addProducto(producto: Producto): Observable<Producto> {
     return this.http.post<Producto>(this.apiUrl, producto);
   }

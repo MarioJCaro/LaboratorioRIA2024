@@ -48,6 +48,7 @@ export class ProductosComponent implements OnInit {
     this.productosService.getProductosPaginado(this.page, this.limit, this.filterField, this.filterValue).subscribe(data => {
       this.dataSource = data.data;
       this.total = data.total;
+      console.log(data);
     });
   }
 
