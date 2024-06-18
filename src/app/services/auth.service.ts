@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable, catchError, map, of, throwError } from 'rx
 
 //Interfaz respuesta del login
 export interface LoginResponse {
+  id: number;
   token: string;
   nombre: string;
   role: string;
@@ -25,7 +26,7 @@ export class AuthService {
     return this.http.post<LoginResponse>(`${this.apiUrl}/login`, credentials).pipe(
       map(response => {
         localStorage.setItem('token', response.token);
-        localStorage.setItem('user', JSON.stringify({ email: response.nombre, role: response.role }));
+        localStorage.setItem('user', JSON.stringify({ id:response.id ,email: response.nombre, role: response.role }));
         this.loggedInSubject.next(true);
         return true;
       }),

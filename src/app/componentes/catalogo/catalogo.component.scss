@@ -23,6 +23,26 @@ mat-card img {
   object-fit: cover; /* Mantiene el aspecto de la imagen y la recorta si es necesario */
 }
 
+.cantidad-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1rem;
+
+  label {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+
+  .cantidad-input {
+    width: 50px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: center;
+  }
+}
+
 @media (min-width: 600px) {
   .grid {
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -30,6 +50,10 @@ mat-card img {
 
   mat-card img {
     height: 150px; /* Ajustar la altura según sea necesario para dispositivos más pequeños */
+  }
+
+  .cantidad-input {
+    width: 60px;
   }
 }
 
@@ -41,6 +65,10 @@ mat-card img {
   mat-card img {
     height: 200px; /* Ajustar la altura según sea necesario para dispositivos medianos */
   }
+
+  .cantidad-input {
+    width: 70px;
+  }
 }
 
 @media (min-width: 1280px) {
@@ -50,5 +78,9 @@ mat-card img {
 
   mat-card img {
     height: 250px; /* Ajustar la altura según sea necesario para dispositivos grandes */
+  }
+
+  .cantidad-input {
+    width: 80px;
   }
 }

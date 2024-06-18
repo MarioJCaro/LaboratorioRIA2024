@@ -1,0 +1,40 @@
+<div class="cart-container" *ngIf="carrito.length > 0; else emptyCart">
+  <div class="cart-items">
+    <mat-card *ngFor="let item of carrito" class="cart-item">
+      <img mat-card-image [src]="item.producto.imagen" alt="{{item.producto.nombre}}">
+      <mat-card-content>
+        <h2>{{item.producto.nombre}}</h2>
+        <p>{{item.producto.descripcion}}</p>
+        <div class="cantidad-control">
+          <button mat-icon-button color="primary" (click)="decrementarCantidad(item.producto.id)">
+            <mat-icon>remove</mat-icon>
+          </button>
+          <span>{{item.cantidad}}</span>
+          <button mat-icon-button color="primary" (click)="incrementarCantidad(item.producto.id)">
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+        <p><strong>{{item.producto.precio | currency}}</strong></p>
+        <button mat-button color="warn" (click)="eliminarDelCarrito(item.producto.id)">Eliminar</button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="cart-summary">
+    <mat-card>
+      <mat-card-title>Resumen de compra</mat-card-title>
+      <mat-card-content>
+        <p>Total de productos: {{ carrito.length }}</p>
+        <p>Total: {{ getTotal() | currency }}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary">Continuar compra</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
+
+<ng-template #emptyCart>
+  <div class="empty-cart-message">
+    <p>No hay items en el carrito.</p>
+  </div>
+</ng-template>

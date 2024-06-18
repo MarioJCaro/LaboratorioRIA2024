@@ -78,7 +78,7 @@ import { CartComponent } from './componentes/cart/cart.component';
     MatOptionModule,
     MatSelectModule,
     MatGridListModule,
-    MatListModule
+    MatListModule,
     
   ],
   providers: [

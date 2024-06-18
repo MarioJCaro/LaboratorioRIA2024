@@ -42,11 +42,24 @@ mat-nav-list a.active {
 
 .item {
   display: flex;
-  align-items: center; 
+  align-items: center !important; 
 }
 
 .item mat-icon {
+  color: white; 
   margin-right: 8px; 
+  font-size: 1.5rem; 
+  align-self: center;
+
+}
+
+.item span {
+  font-size: 1rem; 
+  font-weight: bold; 
+  color: white; 
+  text-transform: uppercase; 
+  letter-spacing: 1px; 
+  align-self: center;
 }
 
 

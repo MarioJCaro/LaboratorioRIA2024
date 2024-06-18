@@ -1,6 +1,6 @@
 <div class="catalogo-container">
   <div class="grid">
-    <div class="grid-item" *ngFor="let producto of productos">
+    <div class="grid-item" *ngFor="let producto of productos; let i = index">
       <mat-card>
         <mat-card-header>
           <mat-card-title>{{ producto.nombre }}</mat-card-title>
@@ -9,9 +9,13 @@
         <img mat-card-image [src]="producto.imagen" alt="{{ producto.nombre }}">
         <mat-card-content style="margin-top: 1rem;">
           <p>{{ producto.descripcion }}</p>
+          <div class="cantidad-container">
+            <label for="cantidad-{{i}}">Cantidad</label>
+            <input id="cantidad-{{i}}" type="number" [(ngModel)]="selectedQuantity[i]" min="1" value="1" class="cantidad-input">
+          </div>
         </mat-card-content>
         <mat-card-actions style="display: flex; justify-content: center;">
-          <button mat-button (click)="agregarAlCarrito(producto)">
+          <button mat-button (click)="agregarAlCarrito(producto, i)">
             <mat-icon>add_shopping_cart</mat-icon>
             Añadir al carrito
           </button>

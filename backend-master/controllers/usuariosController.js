@@ -9,9 +9,9 @@ const generateToken = (user) => {
 // Función para crear usuarios por defecto
 const createDefaultUsers = async () => {
   const defaultUsers = [
-    { email: 'admin@example.com', password: 'admin123', role: 'ADMIN', telefono: '123456789' },
-    { email: 'panadero@example.com', password: 'panadero123', role: 'PANADERO', telefono: '987654321' },
-    { email: 'user@example.com', password: 'user123', role: 'USER', telefono: '456123789' },
+    { id:1, email: 'admin@example.com', password: 'admin123', role: 'ADMIN', telefono: '123456789' },
+    { id:2, email: 'panadero@example.com', password: 'panadero123', role: 'PANADERO', telefono: '987654321' },
+    { id:3, email: 'user@example.com', password: 'user123', role: 'USER', telefono: '456123789' },
   ];
 
   for (const user of defaultUsers) {
@@ -66,7 +66,7 @@ const login = async (req, res) => {
   const user = usuarios.find(u => u.email === email);
   if (user && await bcrypt.compare(password, user.password)) {
     const token = generateToken(user);
-    res.json({ token, nombre: user.email, role: user.role });
+    res.json({ id: user.id, nombre: user.email, role: user.role, token});
   } else {
     res.status(401).json({ message: 'Invalid credentials' });
   }

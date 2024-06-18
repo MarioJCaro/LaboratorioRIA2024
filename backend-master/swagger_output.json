@@ -1098,6 +1098,225 @@
           }
         ]
       }
+    },
+    "/carrito/{userId}": {
+      "get": {
+        "tags": [
+          "Carrito"
+        ],
+        "summary": "Obtiene el carrito de un usuario",
+        "description": "",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID del usuario"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Carrito"
+        ],
+        "summary": "Agrega un producto al carrito",
+        "description": "",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID del usuario"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Add product to cart.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "productId": {
+                  "type": "number",
+                  "example": 1
+                },
+                "cantidad": {
+                  "type": "number",
+                  "example": 2
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Carrito"
+        ],
+        "summary": "Actualiza la cantidad de un producto en el carrito",
+        "description": "",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID del usuario"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Update product quantity in cart.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "productId": {
+                  "type": "number",
+                  "example": 1
+                },
+                "cantidad": {
+                  "type": "number",
+                  "example": 3
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Carrito"
+        ],
+        "summary": "Vacia el carrito del usuario",
+        "description": "",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID del usuario"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/carrito/{userId}/{productId}": {
+      "delete": {
+        "tags": [
+          "Carrito"
+        ],
+        "summary": "Elimina un producto del carrito",
+        "description": "",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID del usuario"
+          },
+          {
+            "name": "productId",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID del producto"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -1324,6 +1543,44 @@
           "type": "array",
           "example": [],
           "items": {}
+        }
+      }
+    },
+    "Carrito": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "number",
+          "example": 1
+        },
+        "productos": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "productId": {
+                "type": "number",
+                "example": 1
+              },
+              "cantidad": {
+                "type": "number",
+                "example": 2
+              }
+            }
+          }
+        }
+      }
+    },
+    "ProductoCarrito": {
+      "type": "object",
+      "properties": {
+        "productId": {
+          "type": "number",
+          "example": 1
+        },
+        "cantidad": {
+          "type": "number",
+          "example": 2
         }
       }
     }

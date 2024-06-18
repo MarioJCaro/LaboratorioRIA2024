@@ -4,7 +4,7 @@ const productosController = require('../controllers/productosController');
 const { verifyToken, isAdmin, isUser } = require('../middleware/auth');
 
 // Ruta para get paginado de productos (debe estar antes de las rutas con parámetros)
-router.get('/paginado', verifyToken, isAdmin, (req, res) => {
+router.get('/paginado', verifyToken, isUser, (req, res) => {
     /* #swagger.summary = 'Obtiene la lista de productos paginados' */
     /* #swagger.tags = ['Productos'] */
     /* #swagger.parameters['page'] = { description: 'Número de página', type: 'integer', required: true } */
@@ -25,7 +25,7 @@ router.get('/', verifyToken, isUser, (req, res) => {
     productosController.getProductos(req, res);
 });
 
-router.get('/:id', verifyToken, isAdmin, (req, res) => {
+router.get('/:id', verifyToken, isUser, (req, res) => {
     /* #swagger.summary = 'Obtiene un producto por ID' */
     /* #swagger.tags = ['Productos'] */
     /* #swagger.parameters['id'] = { description: 'ID del producto', type: 'integer', required: true } */

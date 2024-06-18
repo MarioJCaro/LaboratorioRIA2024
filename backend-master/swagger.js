@@ -81,6 +81,14 @@ const doc = {
       total: 100,
       data: []
     },
+    Carrito: {
+      userId: 1,
+      productos: [{ productId: 1, cantidad: 2 }]
+    },
+    ProductoCarrito: {
+      productId: 1,
+      cantidad: 2
+    },
   }
 };
 

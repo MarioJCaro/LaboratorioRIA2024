@@ -65,6 +65,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
 
   navigateToCart(): void {
-    this.router.navigate(['/carrito']); // Ruta a la vista del carrito
+    this.router.navigate(['/carrito']); 
   }
 }

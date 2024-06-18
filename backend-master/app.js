@@ -8,6 +8,7 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerFile = require('./swagger_output.json');
 const insumosRoutes = require('./routes/insumos');
 const ordenesRoutes = require('./routes/ordenes');
+const cartRoutes = require('./routes/cart');
 const app = express();
 const port = 3000;
 
@@ -22,6 +23,7 @@ app.use('/usuarios', usuariosRoutes);
 app.use('/productos', productosRoutes);
 app.use('/insumos', insumosRoutes);
 app.use('/ordenes', ordenesRoutes);
+app.use('/carrito', cartRoutes);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 app.get('/', (req, res) => {
