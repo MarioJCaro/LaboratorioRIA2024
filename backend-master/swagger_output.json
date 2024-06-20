@@ -380,6 +380,16 @@
         "description": "",
         "parameters": [
           {
+            "name": "sortField",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "sortDirection",
+            "in": "query",
+            "type": "string"
+          },
+          {
             "name": "authorization",
             "in": "header",
             "type": "string"
@@ -714,6 +724,62 @@
             "BearerAuth": []
           }
         ]
+      }
+    },
+    "/insumos/paginado": {
+      "get": {
+        "tags": [
+          "Insumos"
+        ],
+        "summary": "Obtiene la lista de insumos paginados",
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "description": "Número de página",
+            "type": "integer",
+            "required": true,
+            "in": "query"
+          },
+          {
+            "name": "limit",
+            "description": "Cantidad de insumos por página",
+            "type": "integer",
+            "required": true,
+            "in": "query"
+          },
+          {
+            "name": "filterField",
+            "description": "Campo por el que se quiere filtrar",
+            "type": "string",
+            "in": "query"
+          },
+          {
+            "name": "filterValue",
+            "description": "Valor del filtro",
+            "type": "string",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Insumos paginados",
+            "schema": {
+              "$ref": "#/definitions/InsumoPaginado"
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
       }
     },
     "/insumos/": {
@@ -1128,6 +1194,62 @@
         }
       }
     },
+    "/orders/paginado": {
+      "get": {
+        "tags": [
+          "Ordenes"
+        ],
+        "summary": "Obtiene la lista de ordenes paginados",
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "description": "Número de página",
+            "type": "integer",
+            "required": true,
+            "in": "query"
+          },
+          {
+            "name": "limit",
+            "description": "Cantidad de ordenes por página",
+            "type": "integer",
+            "required": true,
+            "in": "query"
+          },
+          {
+            "name": "filterField",
+            "description": "Campo por el que se quiere filtrar",
+            "type": "string",
+            "in": "query"
+          },
+          {
+            "name": "filterValue",
+            "description": "Valor del filtro",
+            "type": "string",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ordenes paginados",
+            "schema": {
+              "$ref": "#/definitions/OrdenesPaginado"
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
     "/orders/": {
       "post": {
         "tags": [
@@ -1460,6 +1582,50 @@
         "cantidad": {
           "type": "number",
           "example": 2
+        }
+      }
+    },
+    "InsumoPaginado": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "number",
+          "example": 1
+        },
+        "limit": {
+          "type": "number",
+          "example": 10
+        },
+        "total": {
+          "type": "number",
+          "example": 100
+        },
+        "data": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        }
+      }
+    },
+    "OrdenesPaginado": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "number",
+          "example": 1
+        },
+        "limit": {
+          "type": "number",
+          "example": 10
+        },
+        "total": {
+          "type": "number",
+          "example": 100
+        },
+        "data": {
+          "type": "array",
+          "example": [],
+          "items": {}
         }
       }
     }

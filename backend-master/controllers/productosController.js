@@ -87,9 +87,8 @@ exports.removeInsumoFromProducto = (req, res) => {
     res.json(producto);
 };
 
-// productosController.js
 exports.getProductosPaginado = (req, res) => {
-    const { page = 1, limit = 10, filterField, filterValue } = req.query;
+    const { page = 1, limit = 10, filterField, filterValue, sortField = 'id', sortDirection = 'asc' } = req.query;
 
     const startIndex = (page - 1) * limit;
     const endIndex = page * limit;
@@ -103,6 +102,16 @@ exports.getProductosPaginado = (req, res) => {
         );
     }
 
+    // Aplicar ordenación
+    filteredProducts.sort((a, b) => {
+        if (a[sortField] < b[sortField]) {
+            return sortDirection === 'asc' ? -1 : 1;
+        } else if (a[sortField] > b[sortField]) {
+            return sortDirection === 'asc' ? 1 : -1;
+        }
+        return 0;
+    });
+
     const paginatedResults = filteredProducts.slice(startIndex, endIndex);
 
     res.json({
@@ -112,5 +121,6 @@ exports.getProductosPaginado = (req, res) => {
         data: paginatedResults
     });
 };
+
 
 

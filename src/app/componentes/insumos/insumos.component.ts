@@ -3,6 +3,8 @@ import { InsumosService, Insumo } from '../../services/insumos.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddInsumoDialogComponent } from '../../dialogs/add-insumo-dialog/add-insumo-dialog.component';
 import { ConfirmDialogComponent } from '../../dialogs/confirm-dialog/confirm-dialog.component';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { PageEvent } from '@angular/material/paginator';
 
 
 @Component({
@@ -13,14 +15,38 @@ import { ConfirmDialogComponent } from '../../dialogs/confirm-dialog/confirm-dia
 export class InsumosComponent implements OnInit {
   displayedColumns: string[] = ['id', 'nombre', 'costo', 'unidad', 'acciones'];
   dataSource: Insumo[] = [];
+  mobileColumns: string[] = ['id', 'nombre', 'unidad', 'acciones'];
+  page = 1;
+  limit = 10;
+  total = 0;
+  filterField = 'nombre';
+  filterValue = '';
+  isMobile: boolean = false;
 
-  constructor(private insumosService: InsumosService, public dialog: MatDialog) { }
+
+  constructor(private insumosService: InsumosService, public dialog: MatDialog, private breakpointObserver: BreakpointObserver) { }
 
   ngOnInit(): void {
-    this.insumosService.getInsumos().subscribe(data => {
-      this.dataSource = data;
+    this.loadInsumos();
+
+    this.breakpointObserver.observe([Breakpoints.XSmall ,Breakpoints.Small])
+      .subscribe(result => {
+        this.isMobile = result.matches;
+        this.setDisplayedColumns();
+      });
+  }
+
+  setDisplayedColumns(): void {
+    this.displayedColumns = this.isMobile ? this.mobileColumns : ['id', 'nombre', 'precio', 'imagen', 'descripcion', 'insumos', 'acciones'];
+  }
+
+  loadInsumos(): void {
+    this.insumosService.getInsumosPaginado(this.page, this.limit, this.filterField, this.filterValue).subscribe(data => {
+      this.dataSource = data.data;
+      this.total = data.total;
     });
   }
+
   openAddInsumoDialog(): void {
     const dialogRef = this.dialog.open(AddInsumoDialogComponent, {
       width: '400px',
@@ -36,8 +62,8 @@ export class InsumosComponent implements OnInit {
 
   addInsumo(insumo: Insumo): void {
     this.insumosService.addInsumo(insumo).subscribe(newInsumo => {
-      this.dataSource.push(newInsumo);
-      this.dataSource = [...this.dataSource]; // Refresh the table data
+      this.page = 1; // Redirigir a la primera página después de agregar un producto
+      this.loadInsumos();
     });
   }
   
@@ -55,7 +81,8 @@ export class InsumosComponent implements OnInit {
 
   deleteInsumo(insumo: Insumo): void {
     this.insumosService.deleteInsumo(insumo.id).subscribe(() => {
-      this.dataSource = this.dataSource.filter(p => p.id !== insumo.id);
+      this.page = 1; // Redirigir a la primera página después de eliminar un producto
+      this.loadInsumos();
     });
   }
   editInsumo(insumo: Insumo): void {
@@ -73,11 +100,18 @@ export class InsumosComponent implements OnInit {
 
   updateInsumo(insumo: Insumo): void {
     this.insumosService.updateInsumo(insumo).subscribe(updatedInsumo => {
-      const index = this.dataSource.findIndex(p => p.id === updatedInsumo.id);
-      if (index !== -1) {
-        this.dataSource[index] = updatedInsumo;
-        this.dataSource = [...this.dataSource]; // Refresh the table data
-      }
+      this.loadInsumos();
     });
+  }
+
+  changePage(event: PageEvent): void {
+    this.page = event.pageIndex + 1;
+    this.limit = event.pageSize;
+    this.loadInsumos();
+  }
+
+  onFilterChange(): void {
+    this.page = 1; // Reiniciar a la primera página cuando se aplica un filtro
+    this.loadInsumos();
   }
 }

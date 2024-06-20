@@ -32,13 +32,17 @@ export class ProductosService {
 
   constructor(private http: HttpClient) {}
 
-  getProductosPaginado(page: number, limit: number, filterField?: string, filterValue?: string): Observable<ProductoResponse> {
+  getProductosPaginado(page: number, limit: number, filterField?: string, filterValue?: string, sortField?: string, sortDirection?: string): Observable<ProductoResponse> {
     let params = new HttpParams()
       .set('page', page.toString())
       .set('limit', limit.toString());
 
     if (filterField && filterValue) {
       params = params.set('filterField', filterField).set('filterValue', filterValue);
+    }
+
+    if (sortField && sortDirection) {
+      params = params.set('sortField', sortField).set('sortDirection', sortDirection);
     }
 
     return this.http.get<ProductoResponse>(`${this.apiUrl}/paginado`, { params });

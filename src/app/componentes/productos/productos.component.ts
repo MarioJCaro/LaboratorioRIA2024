@@ -22,6 +22,8 @@ export class ProductosComponent implements OnInit {
   total = 0;
   filterField = 'nombre';
   filterValue = '';
+  sortField = 'id';
+  sortDirection = 'asc';
   isMobile: boolean = false;
 
   constructor(
@@ -45,10 +47,9 @@ export class ProductosComponent implements OnInit {
   }
 
   loadProductos(): void {
-    this.productosService.getProductosPaginado(this.page, this.limit, this.filterField, this.filterValue).subscribe(data => {
+    this.productosService.getProductosPaginado(this.page, this.limit, this.filterField, this.filterValue, this.sortField, this.sortDirection).subscribe(data => {
       this.dataSource = data.data;
       this.total = data.total;
-      console.log(data);
     });
   }
 
@@ -125,6 +126,16 @@ export class ProductosComponent implements OnInit {
 
   onFilterChange(): void {
     this.page = 1; // Reiniciar a la primera página cuando se aplica un filtro
+    this.loadProductos();
+  }
+
+  setSort(field: string): void {
+    if (this.sortField === field) {
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.sortField = field;
+      this.sortDirection = 'asc';
+    }
     this.loadProductos();
   }
 }

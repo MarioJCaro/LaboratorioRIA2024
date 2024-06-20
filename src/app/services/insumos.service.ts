@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface Insumo {
@@ -7,6 +7,13 @@ export interface Insumo {
   nombre: string;
   costo: number;
   unidad: string;
+}
+
+export interface InsumoResponse {
+  page: number;
+  limit: number;
+  total: number;
+  data: Insumo[];
 }
 
 @Injectable({
@@ -17,6 +24,18 @@ export class InsumosService {
   private apiUrl = 'http://localhost:3000/insumos';
 
   constructor(private http: HttpClient) { }
+
+  getInsumosPaginado(page: number, limit: number, filterField?: string, filterValue?: string): Observable<InsumoResponse> {
+    let params = new HttpParams()
+      .set('page', page.toString())
+      .set('limit', limit.toString());
+
+    if (filterField && filterValue) {
+      params = params.set('filterField', filterField).set('filterValue', filterValue);
+    }
+
+    return this.http.get<InsumoResponse>(`${this.apiUrl}/paginado`, { params });
+  }
 
   getInsumos(): Observable<Insumo[]> {
     return this.http.get<Insumo[]>(this.apiUrl);
