@@ -24,7 +24,11 @@ export class CheckoutComponent {
       return;
     }
 
+    const isoDate = new Date().toISOString();
+  const formattedDate = this.formatDate(isoDate);
+
     const order = {
+      id: 0,
       userId,
       nombre: this.nombre,
       apellido: this.apellido,
@@ -32,13 +36,24 @@ export class CheckoutComponent {
       productos: cartItems.map(item => ({
         productId: item.productId,
         cantidad: item.cantidad
-      }))
+      })),
+      estado: 'pendiente',
+      fecha: formattedDate
     };
+    console.log('Orden:', order);
 
-    this.orderService.createOrder(order).subscribe(() => {
+    this.orderService.addOrden(order).subscribe(() => {
       this.cartService.clearCart(userId);
       console.log('Orden creada con éxito');
       this.router.navigate(['/order-success']);
     });
   }
+  formatDate(isoDate: string): string {
+    const date = new Date(isoDate);
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  }
+  
 }

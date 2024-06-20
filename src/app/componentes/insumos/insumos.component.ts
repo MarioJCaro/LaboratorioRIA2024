@@ -21,6 +21,8 @@ export class InsumosComponent implements OnInit {
   total = 0;
   filterField = 'nombre';
   filterValue = '';
+  sortField = 'id';
+  sortDirection = 'asc';
   isMobile: boolean = false;
 
 
@@ -37,11 +39,11 @@ export class InsumosComponent implements OnInit {
   }
 
   setDisplayedColumns(): void {
-    this.displayedColumns = this.isMobile ? this.mobileColumns : ['id', 'nombre', 'precio', 'imagen', 'descripcion', 'insumos', 'acciones'];
+    this.displayedColumns = this.isMobile ? this.mobileColumns : ['id', 'nombre', 'costo', 'unidad', 'acciones'];
   }
 
   loadInsumos(): void {
-    this.insumosService.getInsumosPaginado(this.page, this.limit, this.filterField, this.filterValue).subscribe(data => {
+    this.insumosService.getInsumosPaginado(this.page, this.limit, this.filterField, this.filterValue, this.sortField, this.sortDirection).subscribe(data => {
       this.dataSource = data.data;
       this.total = data.total;
     });
@@ -112,6 +114,16 @@ export class InsumosComponent implements OnInit {
 
   onFilterChange(): void {
     this.page = 1; // Reiniciar a la primera página cuando se aplica un filtro
+    this.loadInsumos();
+  }
+
+  setSort(field: string): void {
+    if (this.sortField === field) {
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.sortField = field;
+      this.sortDirection = 'asc';
+    }
     this.loadInsumos();
   }
 }

@@ -25,13 +25,17 @@ export class InsumosService {
 
   constructor(private http: HttpClient) { }
 
-  getInsumosPaginado(page: number, limit: number, filterField?: string, filterValue?: string): Observable<InsumoResponse> {
+  getInsumosPaginado(page: number, limit: number, filterField?: string, filterValue?: string, sortField?: string, sortDirection?: string): Observable<InsumoResponse> {
     let params = new HttpParams()
       .set('page', page.toString())
       .set('limit', limit.toString());
 
     if (filterField && filterValue) {
       params = params.set('filterField', filterField).set('filterValue', filterValue);
+    }
+
+    if (sortField && sortDirection) {
+      params = params.set('sortField', sortField).set('sortDirection', sortDirection);
     }
 
     return this.http.get<InsumoResponse>(`${this.apiUrl}/paginado`, { params });

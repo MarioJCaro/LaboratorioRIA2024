@@ -1,4 +1,4 @@
-/* productos.component.scss */
+
 .spacer {
   flex: 1 1 auto;
 }
@@ -27,6 +27,7 @@ table {
 }
 
 mat-paginator {
+  padding-top: 0.5rem;
   margin-top: 0.5rem;
   display: flex;
   justify-content: center;
@@ -51,12 +52,12 @@ mat-paginator {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 40px; /* Ajusta según sea necesario */
-  width: 40px;  /* Ajusta según sea necesario */
+  height: 40px; 
+  width: 40px;  
 }
 
 .icon-button mat-icon {
-  font-size: 24px; /* Ajusta el tamaño del icono si es necesario */
+  font-size: 24px; 
 }
 .sortable-header {
   cursor: pointer;
@@ -68,5 +69,5 @@ mat-paginator {
 }
 
 .header-content mat-icon {
-  margin-left: 8px; // Espacio entre el texto y el ícono
+  margin-left: 8px; 
 }

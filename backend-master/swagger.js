@@ -94,6 +94,16 @@ const doc = {
       total: 100,
       data: []
     },
+    Orden: {
+      id: 1,
+      userId: 1,
+      nombre: "John",
+      apellido: "Doe",
+      celular: "123456789",
+      productos: [{ productId: 1, cantidad: 2 }],
+      estado: "pendiente",
+      fecha: "20/06/2024",
+    },
   }
 };
 

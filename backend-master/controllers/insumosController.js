@@ -56,26 +56,36 @@ exports.deleteInsumo = (req, res) => {
 };
 
 exports.getInsumosPaginado = (req, res) => {
-    const { page = 1, limit = 10, filterField, filterValue } = req.query;
+    const { page = 1, limit = 10, filterField, filterValue, sortField = 'id', sortDirection = 'asc'  } = req.query;
 
     const startIndex = (page - 1) * limit;
     const endIndex = page * limit;
 
-    let filteredProducts = insumos;
+    let filteredInsumos = insumos;
 
     // Aplicar filtros si existen
     if (filterField && filterValue) {
-        filteredProducts = insumos.filter(insumo => 
+        filteredInsumos = insumos.filter(insumo => 
             insumo[filterField] && insumo[filterField].toString().toLowerCase().includes(filterValue.toLowerCase())
         );
     }
 
-    const paginatedResults = filteredProducts.slice(startIndex, endIndex);
+     // Aplicar ordenación
+     filteredInsumos.sort((a, b) => {
+        if (a[sortField] < b[sortField]) {
+            return sortDirection === 'asc' ? -1 : 1;
+        } else if (a[sortField] > b[sortField]) {
+            return sortDirection === 'asc' ? 1 : -1;
+        }
+        return 0;
+    });
+
+    const paginatedResults = filteredInsumos.slice(startIndex, endIndex);
 
     res.json({
         page: parseInt(page),
         limit: parseInt(limit),
-        total: filteredProducts.length,
+        total: filteredInsumos.length,
         data: paginatedResults
     });
 };
