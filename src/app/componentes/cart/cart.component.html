@@ -27,7 +27,7 @@
         <p>Total: {{ getTotal() | currency }}</p>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-raised-button color="primary">Continuar compra</button>
+        <button mat-raised-button color="primary" [routerLink]="['/checkout']">Continuar compra</button>
       </mat-card-actions>
     </mat-card>
   </div>

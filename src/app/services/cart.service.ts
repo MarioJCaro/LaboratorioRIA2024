@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { Producto } from './productos.service';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 
 interface CartItem {
   productId: number;
@@ -19,26 +18,42 @@ export class CartService {
   constructor(private http: HttpClient) {}
 
   getCart(userId: number): Observable<{ userId: number; productos: CartItem[] }> {
-    return this.http.get<{ userId: number; productos: CartItem[] }>(`${this.apiUrl}/${userId}`);
+    return this.http.get<{ userId: number; productos: CartItem[] }>(`${this.apiUrl}/${userId}`).pipe(
+      tap(response => {
+        this.carritoSubject.next(response.productos);
+      })
+    );
   }
 
   addToCart(userId: number, productId: number, cantidad: number): void {
-    this.http.post<CartItem[]>(`${this.apiUrl}/${userId}`, { productId, cantidad }).subscribe((carrito: CartItem[]) => {
-      this.carritoSubject.next(carrito);
+    this.http.post<{ userId: number; productos: CartItem[] }>(`${this.apiUrl}/${userId}`, { productId, cantidad }).subscribe((response) => {
+      this.carritoSubject.next(response.productos);
     });
   }
 
   updateCart(userId: number, productId: number, cantidad: number): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${userId}`, { productId, cantidad });
+    return this.http.put<{ userId: number; productos: CartItem[] }>(`${this.apiUrl}/${userId}`, { productId, cantidad }).pipe(
+      tap(response => {
+        this.carritoSubject.next(response.productos);
+      })
+    );
   }
 
-  removeFromCart(userId: number, productId: number): Observable<CartItem[]> {
-    return this.http.delete<CartItem[]>(`${this.apiUrl}/${userId}/${productId}`);
+  removeFromCart(userId: number, productId: number): Observable<{ userId: number; productos: CartItem[] }> {
+    return this.http.delete<{ userId: number; productos: CartItem[] }>(`${this.apiUrl}/${userId}/${productId}`).pipe(
+      tap(response => {
+        this.carritoSubject.next(response.productos);
+      })
+    );
   }
 
   clearCart(userId: number): void {
     this.http.delete(`${this.apiUrl}/${userId}`).subscribe(() => {
       this.carritoSubject.next([]);
     });
+  }
+
+  getCurrentCartItems(): CartItem[] {
+    return this.carritoSubject.value;
   }
 }

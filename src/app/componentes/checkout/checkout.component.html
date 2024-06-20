@@ -1,0 +1,23 @@
+<div class="checkout-container">
+    <mat-card>
+      <mat-card-title>Checkout</mat-card-title>
+      <mat-card-content>
+        <form (ngSubmit)="confirmarCompra()">
+          <mat-form-field>
+            <mat-label>Nombre</mat-label>
+            <input matInput [(ngModel)]="nombre" name="nombre" required>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Apellido</mat-label>
+            <input matInput [(ngModel)]="apellido" name="apellido" required>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Celular</mat-label>
+            <input matInput [(ngModel)]="celular" name="celular" required>
+          </mat-form-field>
+          <button mat-raised-button color="primary" type="submit">Confirmar Compra</button>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  

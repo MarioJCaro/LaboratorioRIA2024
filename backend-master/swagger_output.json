@@ -909,196 +909,6 @@
         ]
       }
     },
-    "/ordenes/": {
-      "get": {
-        "tags": [
-          "Ordenes"
-        ],
-        "summary": "Obtiene la lista de ordenes",
-        "description": "",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Ordenes"
-        ],
-        "summary": "Agrega un nuevo orden",
-        "description": "",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "description": "Add new product.",
-            "schema": {
-              "$ref": "#/definitions/Orden"
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        },
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ]
-      }
-    },
-    "/ordenes/{id}": {
-      "get": {
-        "tags": [
-          "Ordenes"
-        ],
-        "summary": "Obtiene un orden por ID",
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "description": "ID del orden"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Ordenes"
-        ],
-        "summary": "Actualiza un orden existente",
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "description": "ID del orden"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "description": "Update product.",
-            "schema": {
-              "$ref": "#/definitions/Orden"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        },
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ]
-      },
-      "delete": {
-        "tags": [
-          "Ordenes"
-        ],
-        "summary": "Elimina un orden",
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "description": "ID del orden"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        },
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ]
-      }
-    },
     "/carrito/{userId}": {
       "get": {
         "tags": [
@@ -1317,6 +1127,100 @@
           }
         }
       }
+    },
+    "/orders/": {
+      "post": {
+        "tags": [
+          "Ordenes"
+        ],
+        "summary": "Crea una nueva orden",
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Create order.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "type": "number",
+                  "example": 1
+                },
+                "nombre": {
+                  "type": "string",
+                  "example": "John"
+                },
+                "apellido": {
+                  "type": "string",
+                  "example": "Doe"
+                },
+                "celular": {
+                  "type": "string",
+                  "example": "123456789"
+                },
+                "productos": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "productId": {
+                        "type": "number",
+                        "example": 1
+                      },
+                      "cantidad": {
+                        "type": "number",
+                        "example": 2
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Ordenes"
+        ],
+        "summary": "Obtiene todas las órdenes",
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -1483,31 +1387,6 @@
         "costo": {
           "type": "number",
           "example": 100
-        }
-      }
-    },
-    "Orden": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "number",
-          "example": 1
-        },
-        "nombre": {
-          "type": "string",
-          "example": "Orden Ejemplo"
-        },
-        "descripcion": {
-          "type": "string",
-          "example": "Descripción de la orden"
-        },
-        "imagen": {
-          "type": "string",
-          "example": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA..."
-        },
-        "precio": {
-          "type": "number",
-          "example": 99.99
         }
       }
     },

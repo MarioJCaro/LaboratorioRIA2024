@@ -40,6 +40,8 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { CartComponent } from './componentes/cart/cart.component';
+import { CheckoutComponent } from './componentes/checkout/checkout.component';
+import { OrderSuccessComponent } from './componentes/order-success/order-success.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -55,7 +57,9 @@ import { CartComponent } from './componentes/cart/cart.component';
     AddInsumoDialogComponent,
     ConfDelInsumoDialogComponent,
     ViewInsumosDialogComponent,
-    CartComponent
+    CartComponent,
+    CheckoutComponent,
+    OrderSuccessComponent
   ],
   imports: [
     BrowserModule,

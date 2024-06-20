@@ -8,6 +8,8 @@ import { CatalogoComponent } from './componentes/catalogo/catalogo.component';
 import { authGuard } from './auth.guard';
 import { InsumosComponent } from './componentes/insumos/insumos.component';
 import { CartComponent } from './componentes/cart/cart.component';
+import { CheckoutComponent } from './componentes/checkout/checkout.component';
+import { OrderSuccessComponent } from './componentes/order-success/order-success.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -17,6 +19,8 @@ const routes: Routes = [
   {path: 'ordenes', component: OrdenesComponent, canActivate: [authGuard], data: { roles: ['PANADERO'] }},
   {path: 'catalogo', component: CatalogoComponent, canActivate: [authGuard], data: { roles: ['USER'] } },
   {path: 'carrito', component: CartComponent, canActivate: [authGuard], data: { roles: ['USER'] } },
+  {path: 'checkout', component: CheckoutComponent, canActivate: [authGuard], data: { roles: ['USER'] } },
+  {path: 'order-success', component: OrderSuccessComponent, canActivate: [authGuard], data: { roles: ['USER'] } },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
 ];
 

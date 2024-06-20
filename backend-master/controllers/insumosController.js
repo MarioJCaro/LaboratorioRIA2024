@@ -54,3 +54,28 @@ exports.deleteInsumo = (req, res) => {
         res.status(404).json({ message: 'Insumo no encontrado' });
     }
 };
+
+exports.getInsumosPaginado = (req, res) => {
+    const { page = 1, limit = 10, filterField, filterValue } = req.query;
+
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
+
+    let filteredProducts = insumos;
+
+    // Aplicar filtros si existen
+    if (filterField && filterValue) {
+        filteredProducts = insumos.filter(insumo => 
+            insumo[filterField] && insumo[filterField].toString().toLowerCase().includes(filterValue.toLowerCase())
+        );
+    }
+
+    const paginatedResults = filteredProducts.slice(startIndex, endIndex);
+
+    res.json({
+        page: parseInt(page),
+        limit: parseInt(limit),
+        total: filteredProducts.length,
+        data: paginatedResults
+    });
+};
