@@ -3,20 +3,20 @@ const router = express.Router();
 const orderController = require('../controllers/orderController');
 const { verifyToken, isUser } = require('../middleware/auth');
 
-// Ruta para get paginado de insumos (debe estar antes de las rutas con parámetros)
+// Ruta para get paginado de ordenes (debe estar antes de las rutas con parámetros)
 router.get('/paginado', verifyToken, isUser, (req, res) => {
-    /* #swagger.summary = 'Obtiene la lista de insumos paginados' */
-    /* #swagger.tags = ['Insumos'] */
+    /* #swagger.summary = 'Obtiene la lista de ordenes paginados' */
+    /* #swagger.tags = ['Ordenes'] */
     /* #swagger.parameters['page'] = { description: 'Número de página', type: 'integer', required: true } */
-    /* #swagger.parameters['limit'] = { description: 'Cantidad de insumos por página', type: 'integer', required: true } */
+    /* #swagger.parameters['limit'] = { description: 'Cantidad de ordenes por página', type: 'integer', required: true } */
     /* #swagger.parameters['filterField'] = { description: 'Campo por el que se quiere filtrar', type: 'string' } */
     /* #swagger.parameters['filterValue'] = { description: 'Valor del filtro', type: 'string' } */
     // Schema de respuesta
     /* #swagger.responses[200] = {
-        schema: { $ref: '#/definitions/InsumoPaginado' },
-        description: 'Insumos paginados'
+        schema: { $ref: '#/definitions/OrdenesPaginado' },
+        description: 'Ordenes paginados'
     } */
-    insumosController.getInsumosPaginado(req, res);
+    orderController.getOrdersPaginado(req, res);
 });
 
 router.post('/', verifyToken, isUser, (req, res) => {

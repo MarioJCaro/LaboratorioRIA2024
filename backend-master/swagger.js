@@ -88,6 +88,12 @@ const doc = {
       total: 100,
       data: []
     },
+    OrdenesPaginado: {
+      page: 1,
+      limit: 10,
+      total: 100,
+      data: []
+    },
   }
 };
 
