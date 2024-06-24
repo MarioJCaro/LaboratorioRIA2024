@@ -43,6 +43,7 @@ import { CartComponent } from './componentes/cart/cart.component';
 import { CheckoutComponent } from './componentes/checkout/checkout.component';
 import { OrderSuccessComponent } from './componentes/order-success/order-success.component';
 import { AddOrdenDialogComponent } from './dialogs/add-orden-dialog/add-orden-dialog.component';
+import { DetalleOrdenDialogComponent } from './dialogs/detalle-orden-dialog/detalle-orden-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,7 +62,8 @@ import { AddOrdenDialogComponent } from './dialogs/add-orden-dialog/add-orden-di
     CartComponent,
     CheckoutComponent,
     OrderSuccessComponent,
-    AddOrdenDialogComponent
+    AddOrdenDialogComponent,
+    DetalleOrdenDialogComponent
   ],
   imports: [
     BrowserModule,

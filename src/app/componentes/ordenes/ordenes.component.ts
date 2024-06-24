@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { OrderService, Orden } from '../../services/order.service';
+import { OrderService, Orden, Estado } from '../../services/order.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddOrdenDialogComponent } from '../../dialogs/add-orden-dialog/add-orden-dialog.component';
 import { ConfirmDialogComponent } from '../../dialogs/confirm-dialog/confirm-dialog.component';
 import { PageEvent } from '@angular/material/paginator';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { DetalleOrdenDialogComponent } from '../../dialogs/detalle-orden-dialog/detalle-orden-dialog.component';
 
 @Component({
   selector: 'app-ordenes',
@@ -23,6 +24,7 @@ export class OrdenesComponent implements OnInit {
   sortField = 'id';
   sortDirection = 'asc';
   isMobile: boolean = false;
+  estados: Estado[] = [];
 
   constructor(
     private orderService: OrderService,
@@ -32,6 +34,7 @@ export class OrdenesComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadOrdenes();
+    this.estados = this.orderService.getEstados();
 
     this.breakpointObserver.observe([Breakpoints.XSmall ,Breakpoints.Small])
       .subscribe(result => {
@@ -128,6 +131,19 @@ export class OrdenesComponent implements OnInit {
       this.sortDirection = 'asc';
     }
     this.loadOrdenes();
+  }
+
+  verDetallesOrden(orden: Orden): void {
+    const dialogRef = this.dialog.open(DetalleOrdenDialogComponent, {
+      width: '450px',
+      data: { orden }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loadOrdenes();
+      }
+    });
   }
 }
 

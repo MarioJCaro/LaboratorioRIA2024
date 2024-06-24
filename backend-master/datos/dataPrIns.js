@@ -8,7 +8,15 @@ let insumos = [
     { id: 2, nombre: 'Sal', unidad: 'Kg', costo: 300 }
 ];
 
+let estados = [
+    { id: 1, nombre: 'Pendiente' },
+    { id: 2, nombre: 'En preparación' },
+    { id: 3, nombre: 'Listo para recoger'},
+    { id: 4, nombre: 'Entregado' }
+];
+
 module.exports = {
     productos,
-    insumos
+    insumos,
+    estados
 };

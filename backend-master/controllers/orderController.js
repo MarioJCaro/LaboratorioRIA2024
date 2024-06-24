@@ -1,3 +1,5 @@
+const {estados} = require('../datos/dataPrIns'); 
+
 const orders = [
     {
         id: 1,
@@ -6,10 +8,10 @@ const orders = [
         apellido: 'Perez',
         celular: '123456789',
         productos: [
-            { id: 1, cantidad: 2 },
-            { id: 2, cantidad: 1 }
+            { productId: 1, cantidad: 2 },
+            { productId: 2, cantidad: 1 }
         ],
-        estado:'pendiente',
+        estado: estados[0].nombre,
         fecha: "19/05/2024"
     },
 ];
@@ -119,5 +121,21 @@ exports.deleteOrden = (req, res) => {
         res.json(deletedOrden);
     } else {
         res.status(404).json({ message: 'Orden no encontrado' });
+    }
+};
+
+exports.updateOrdenEstado = (req, res) => {
+    const { id } = req.params;
+    const { estado } = req.body;
+    const ordenIndex = orders.findIndex(p => p.id == id);
+    if (ordenIndex !== -1) {
+        if (estados.find(e => e.nombre === estado)) {
+            orders[ordenIndex].estado = estado;
+            res.json(orders[ordenIndex]);
+        } else {
+            res.status(400).json({ message: 'Estado no válido' });
+        }
+    } else {
+        res.status(404).json({ message: 'Orden no encontrada' });
     }
 };

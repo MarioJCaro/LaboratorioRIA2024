@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Producto } from './productos.service';
 
 export interface Orden {
   id: number;
- userId: number;
+  userId: number;
   nombre: string;
   apellido: string;
   celular: string;
@@ -13,9 +14,12 @@ export interface Orden {
     cantidad: number;
   }[],
   estado: string;
-  fecha: string
-  ;
+  fecha: string;
+}
 
+export interface Estado {
+  id: number;
+  nombre: string;
 }
 //Respuesta getOrdenes
 
@@ -26,11 +30,21 @@ export interface OrdenResponse {
   data: Orden[];
 }
 
+export interface ProductoConCantidad {
+  producto: Producto;
+  cantidad: number;
+}
 @Injectable({
   providedIn: 'root'
 })
 export class OrderService {
   private apiUrl = 'http://localhost:3000/orders'; // URL del backend para órdenes
+  private estados: Estado[] = [
+    { id: 1, nombre: 'Pendiente' },
+    { id: 2, nombre: 'En preparación' },
+    { id: 3, nombre: 'Listo para recoger' },
+    { id: 4, nombre: 'Entregado' }
+  ];
 
   constructor(private http: HttpClient) {}
 
@@ -62,7 +76,9 @@ export class OrderService {
   addOrden(producto: Orden): Observable<Orden> {
     return this.http.post<Orden>(this.apiUrl, producto);
   }
-  
+  getEstados(): Estado[] {
+    return this.estados;
+  }
   deleteOrden(id: number): Observable<void> {
     const url = `${this.apiUrl}/${id}`;
     return this.http.delete<void>(url);
@@ -71,5 +87,8 @@ export class OrderService {
   updateOrden(producto: Orden): Observable<Orden> {
     const url = `${this.apiUrl}/${producto.id}`;
     return this.http.put<Orden>(url, producto);
+  }
+  updateOrderEstado(id: number, estado: string): Observable<Orden> {
+    return this.http.patch<Orden>(`${this.apiUrl}/${id}/estado`, { estado });
   }
 }

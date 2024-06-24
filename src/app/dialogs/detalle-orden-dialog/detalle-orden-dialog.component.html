@@ -1,0 +1,65 @@
+<h1 mat-dialog-title>Detalles de Orden</h1>
+<div mat-dialog-content>
+  <p><strong>Cliente:</strong> {{ data.orden.nombre }} {{ data.orden.apellido }}</p>
+  <p><strong>Celular:</strong> {{ data.orden.celular }}</p>
+  <p><strong>Fecha:</strong> {{ data.orden.fecha }}</p>
+  <mat-form-field appearance="fill">
+    <mat-label>Estado</mat-label>
+    <mat-select [(value)]="data.orden.estado">
+      <mat-option *ngFor="let estado of estados" [value]="estado.nombre">
+        {{ estado.nombre }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <!-- Botón para ver productos e insumos -->
+  <button mat-raised-button color="accent" (click)="toggleProductosInsumos()">
+    {{ showProductosInsumos ? 'Ocultar' : 'Ver' }} Productos e Insumos
+  </button>
+
+  <!-- Mostrar productos e insumos si está activo -->
+  <div *ngIf="showProductosInsumos">
+    <h2>Productos e Insumos</h2>
+    <div style="display: flex;">
+      <div style="width: 50%;">
+        <div style="display: flex; justify-content: center;">
+        <h3>Productos</h3>
+        </div>
+        <ul>
+          <li *ngFor="let producto of productos">
+            <strong>{{ producto.producto.nombre }}</strong> - Cantidad: {{ producto.cantidad }}
+          </li>
+        </ul>
+      </div>
+      <div style="width: 50%;">
+        <div style="display: flex; justify-content: center;">
+            <h3 style="margin-right: 5px;">Insumos</h3>
+            <mat-icon color="primary" (click)="alternarVistaInsumos()" style="cursor: pointer;">
+              {{ mostrarInsumosTotales ? 'list_alt' : 'view_module' }}
+            </mat-icon>
+          </div>
+        <ul>
+          <ng-template [ngIf]="!mostrarInsumosTotales">
+            <li *ngFor="let producto of productos">
+              <strong>{{ producto.producto.nombre }}:</strong>
+              <ul style="padding: 0;">
+                <li *ngFor="let insumo of getInsumosForProduct(producto.producto)">
+                  {{ insumo.insumo.nombre }} - {{ insumo.cantidad }} {{ insumo.insumo.unidad }}
+                </li>
+              </ul>
+            </li>
+          </ng-template>
+          <ng-template [ngIf]="mostrarInsumosTotales">
+                <li *ngFor="let insumo of getTotalInsumos()">
+                  {{ insumo.insumo.nombre }} - {{ insumo.cantidad }} {{ insumo.insumo.unidad }}
+                </li>
+          </ng-template>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button color="primary" (click)="save()">Guardar</button>
+</div>

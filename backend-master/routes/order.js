@@ -25,7 +25,7 @@ router.post('/', verifyToken, isUser, (req, res) => {
     /* #swagger.parameters['body'] = {
         in: 'body',
         description: 'Create order.',
-        schema: { userId: 1, nombre: 'John', apellido: 'Doe', celular: '123456789', productos: [{ productId: 1, cantidad: 2 }], estado: 'pendiente', fecha: "20/06/2024" }
+        schema: { userId: 1, nombre: 'John', apellido: 'Doe', celular: '123456789', productos: [{ productId: 1, cantidad: 2 }], estado: 'Pendiente', fecha: '19/05/2024' }
     } */
     orderController.createOrder(req, res);
 });
@@ -63,4 +63,15 @@ router.delete('/:id', verifyToken, isUser, (req, res) => {
     orderController.deleteOrden(req, res);
 });
 
+router.patch('/:id/estado', verifyToken, isUser, (req, res) => {
+    /* #swagger.summary = 'Actualiza el estado de un orden' */
+    /* #swagger.tags = ['Ordenes'] */
+    /* #swagger.parameters['id'] = { description: 'ID del orden', type: 'integer', required: true } */
+    /* #swagger.parameters['body'] = {
+        in: 'body',
+        description: 'Estado nuevo para la orden',
+        schema: { estado: 'En preparación' }
+    } */
+    orderController.updateOrdenEstado(req, res);
+});
 module.exports = router;

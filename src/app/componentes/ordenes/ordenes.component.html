@@ -12,11 +12,9 @@
                     <mat-option value="celular">Celular</mat-option>
                     <mat-option value="fecha">Fecha</mat-option>
                     <mat-option value="estado">Estado</mat-option>
-                    <!-- Agregar más opciones de filtro si es necesario -->
                 </mat-select>
             </mat-form-field>
 
-            <!-- Campo de búsqueda dinámico -->
             <ng-container>
                 <mat-form-field appearance="fill" class="search" style="margin-right: 1rem;">
                     <mat-label>Buscar</mat-label>
@@ -95,7 +93,7 @@
             <ng-container matColumnDef="detalles">
                 <th mat-header-cell *matHeaderCellDef> Detalles </th>
                 <td mat-cell *matCellDef="let element">
-                    <button mat-icon-button style="background-color: #0da4ca; color: #000;">
+                    <button mat-icon-button style="background-color: #0da4ca; color: #000;" (click)="verDetallesOrden(element)">
                         <mat-icon>info</mat-icon>
                     </button>
                 </td>

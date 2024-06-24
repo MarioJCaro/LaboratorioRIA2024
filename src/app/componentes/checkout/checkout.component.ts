@@ -25,7 +25,7 @@ export class CheckoutComponent {
     }
 
     const isoDate = new Date().toISOString();
-  const formattedDate = this.formatDate(isoDate);
+    const formattedDate = this.formatDate(isoDate);
 
     const order = {
       id: 0,
@@ -37,7 +37,7 @@ export class CheckoutComponent {
         productId: item.productId,
         cantidad: item.cantidad
       })),
-      estado: 'pendiente',
+      estado: 'Pendiente',
       fecha: formattedDate
     };
     console.log('Orden:', order);

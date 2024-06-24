@@ -1324,11 +1324,11 @@
                 },
                 "estado": {
                   "type": "string",
-                  "example": "pendiente"
+                  "example": "Pendiente"
                 },
                 "fecha": {
                   "type": "string",
-                  "example": "20/06/2024"
+                  "example": "19/05/2024"
                 }
               }
             }
@@ -1495,6 +1495,60 @@
             "BearerAuth": []
           }
         ]
+      }
+    },
+    "/orders/{id}/estado": {
+      "patch": {
+        "tags": [
+          "Ordenes"
+        ],
+        "summary": "Actualiza el estado de un orden",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID del orden"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Estado nuevo para la orden",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "estado": {
+                  "type": "string",
+                  "example": "En preparación"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
       }
     }
   },
