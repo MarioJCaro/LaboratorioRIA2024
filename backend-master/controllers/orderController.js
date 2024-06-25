@@ -3,7 +3,7 @@ const {estados} = require('../datos/dataPrIns');
 const orders = [
     {
         id: 1,
-        userId: 1,
+        userId: 3,
         nombre: 'Juan',
         apellido: 'Perez',
         celular: '123456789',
@@ -40,7 +40,7 @@ exports.getAllOrders = (req, res) => {
 
 
 exports.getOrdersPaginado = (req, res) => {
-    const { page = 1, limit = 10, filterField, filterValue, sortField = 'id', sortDirection = 'asc' } = req.query;
+    const { page = 1, limit = 10, filterField, filterValue, sortField = 'id', sortDirection = 'asc', userId } = req.query;
 
     const startIndex = (page - 1) * limit;
     const endIndex = page * limit;
@@ -51,14 +51,19 @@ exports.getOrdersPaginado = (req, res) => {
     if (filterField && filterValue) {
         if (filterField === 'cliente') {
             const lowerFilterValue = filterValue.toLowerCase();
-            filteredOrders = orders.filter(order => 
+            filteredOrders = orders.filter(order =>
                 (`${order.nombre} ${order.apellido}`).toLowerCase().includes(lowerFilterValue)
             );
         } else {
-            filteredOrders = orders.filter(order => 
+            filteredOrders = orders.filter(order =>
                 order[filterField] && order[filterField].toString().toLowerCase().includes(filterValue.toLowerCase())
             );
         }
+    }
+
+    // Filtrar por userId si se proporciona
+    if (userId) {
+        filteredOrders = filteredOrders.filter(order => order.userId === parseInt(userId));
     }
 
     // Aplicar ordenación

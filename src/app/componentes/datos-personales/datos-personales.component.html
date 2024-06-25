@@ -1,0 +1,28 @@
+<div *ngIf="usuario">
+    <h2>Datos Personales</h2>
+    <p><strong>Email:</strong> {{ usuario.email }}</p>
+    <p><strong>Celular:</strong> {{ usuario.telefono}}</p>
+  
+    <div *ngIf="!cambiandoPassword">
+      <button mat-button color="primary" (click)="cambiandoPassword = true">Cambiar Contraseña</button>
+      <button mat-button color="primary" (click)="irMisOrdenes()">Mis Órdenes</button>
+    </div>
+  
+    <form *ngIf="cambiandoPassword" (ngSubmit)="cambiarPassword()">
+      <mat-form-field appearance="fill">
+        <mat-label>Contraseña Actual</mat-label>
+        <input matInput type="password" [(ngModel)]="oldPassword" name="oldPassword" required>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Nueva Contraseña</mat-label>
+        <input matInput type="password" [(ngModel)]="newPassword" name="newPassword" required>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Confirmar Nueva Contraseña</mat-label>
+        <input matInput type="password" [(ngModel)]="confirmNewPassword" name="confirmNewPassword" required>
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit">Guardar Cambios</button>
+      <button mat-raised-button color="warn" type="button" (click)="cambiandoPassword = false">Cancelar</button>
+    </form>
+  </div>
+  

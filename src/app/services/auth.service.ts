@@ -8,6 +8,7 @@ export interface LoginResponse {
   token: string;
   nombre: string;
   role: string;
+  expirationDate: string;
 }
 
 
@@ -17,7 +18,7 @@ export interface LoginResponse {
 export class AuthService {
 
   private apiUrl = 'http://localhost:3000/usuarios';
-  private loggedInSubject = new BehaviorSubject<boolean>(false); // Observable para el estado de inicio de sesión
+  private loggedInSubject = new BehaviorSubject<boolean>(false); 
   public loggedIn = this.loggedInSubject.asObservable();
 
   constructor(private http: HttpClient) { }
@@ -27,6 +28,7 @@ export class AuthService {
       map(response => {
         localStorage.setItem('token', response.token);
         localStorage.setItem('user', JSON.stringify({ id:response.id ,email: response.nombre, role: response.role }));
+        localStorage.setItem('tokenExpiration', response.expirationDate)
         this.loggedInSubject.next(true);
         return true;
       }),
@@ -56,7 +58,8 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
-    this.loggedInSubject.next(false); 
+    localStorage.removeItem('tokenExpiration');
+    this.loggedInSubject.next(false);
   }
 
   getCurrentUser() {
@@ -65,7 +68,33 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    return !!localStorage.getItem('token');
-
+    const token = localStorage.getItem('token');
+    const isExpired = this.isTokenExpired();
+    return !!token && !isExpired;
   }
+
+  isTokenExpired(): boolean {
+    const expirationDate = localStorage.getItem('tokenExpiration');
+    if (!expirationDate) {
+      return true;
+    }
+
+    const [day, month, year, hours, minutes, seconds] = expirationDate.split(/[/ :]/);
+    const expDate = new Date(+year, +month - 1, +day, +hours, +minutes, +seconds);
+    return expDate.getTime() < new Date().getTime();
+  }
+
+  getUserById(userId: number): Observable<any> {
+    const url = `${this.apiUrl}/${userId}`;
+    return this.http.get<any>(url);
+  }
+
+  // Cambiar contraseña con handle error, en el body se manda id, oldPassword y newPassword
+  changePassword(id: number, oldPassword: string, newPassword: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/change-password`, { id, oldPassword, newPassword }).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+
 }

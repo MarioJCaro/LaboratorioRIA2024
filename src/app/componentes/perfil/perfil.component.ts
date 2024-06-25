@@ -8,23 +8,24 @@ import { DetalleOrdenDialogComponent } from '../../dialogs/detalle-orden-dialog/
 import { VerInsumosTotalesDialogComponent } from '../../dialogs/ver-insumos-totales-dialog/ver-insumos-totales-dialog.component';
 
 @Component({
-  selector: 'app-ordenes',
-  templateUrl: './ordenes.component.html',
-  styleUrl: './ordenes.component.scss'
+  selector: 'app-perfil',
+  templateUrl: './perfil.component.html',
+  styleUrl: './perfil.component.scss'
 })
-export class OrdenesComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'cliente', 'celular','fecha','estado','detalles'];
+export class PerfilComponent implements OnInit {
+  displayedColumns: string[] = ['id','fecha','estado','total','detalles'];
   mobileColumns: string[] = ['id', 'fecha' ,'estado', 'detalles'];
   dataSource: Orden[] = [];
   page = 1;
   limit = 10;
   total = 0;
-  filterField = 'cliente';
+  filterField = 'fecha';
   filterValue = '';
   sortField = 'id';
   sortDirection = 'asc';
   isMobile: boolean = false;
   estados: Estado[] = [];
+  userId: number | null = null;
 
   constructor(
     private orderService: OrderService,
@@ -33,6 +34,7 @@ export class OrdenesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.userId = this.getUserIdFromLocalStorage();
     this.loadOrdenes();
     this.estados = this.orderService.getEstados();
 
@@ -43,50 +45,27 @@ export class OrdenesComponent implements OnInit {
       });
   }
 
+  getUserIdFromLocalStorage(): number | null {
+    const user = localStorage.getItem('user');
+    if (user) {
+      const userData = JSON.parse(user);
+      return userData.id;
+    }
+    return null;
+  }
   setDisplayedColumns(): void {
-    this.displayedColumns = this.isMobile ? this.mobileColumns : ['id', 'cliente', 'celular','fecha','estado','detalles'];
+    this.displayedColumns = this.isMobile ? this.mobileColumns : ['id','fecha','estado','total','detalles'];
   }
 
   loadOrdenes(): void {
-    this.orderService.getOrdenesPaginado(this.page, this.limit, this.filterField, this.filterValue, this.sortField, this.sortDirection).subscribe(data => {
+    this.orderService.getOrdenesPaginado(this.page, this.limit, this.filterField, this.filterValue, this.sortField, this.sortDirection, this.userId as number | undefined).subscribe(data => {
       this.dataSource = data.data;
       this.total = data.total;
-    });
-  }
-
-  verInsumosTotalesDialog(): void {
-    const dialogRef = this.dialog.open(VerInsumosTotalesDialogComponent, {
-      width: '600px'
-    });
-  
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        // Aquí puedes agregar cualquier lógica adicional si es necesario
-      }
-    });
-  }
-
-  confirmDelete(orden: Orden): void {
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '300px'
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.deleteOrden(orden);
-      }
-    });
-  }
-
-  deleteOrden(orden: Orden): void {
-    this.orderService.deleteOrden(orden.id).subscribe(() => {
-      this.page = 1; // Redirigir a la primera página después de eliminar un producto
-      this.loadOrdenes();
+      console.log(this.dataSource);
     });
   }
 
   
-
   changePage(event: PageEvent): void {
     this.page = event.pageIndex + 1;
     this.limit = event.pageSize;
@@ -121,4 +100,5 @@ export class OrdenesComponent implements OnInit {
     });
   }
 }
+
 

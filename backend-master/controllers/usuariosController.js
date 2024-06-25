@@ -3,8 +3,18 @@ const jwt = require('jsonwebtoken');
 const usuarios = [];
 
 const generateToken = (user) => {
-  return jwt.sign({ id: user.id, role: user.role }, 'your_secret_key', { expiresIn: '1h' });
+  const expiresIn = '1h';
+  const token = jwt.sign({ id: user.id, role: user.role }, 'your_secret_key', { expiresIn });
+  const expirationDate = new Date(Date.now() + 3600 * 1000); 
+  const formattedExpirationDate = `${expirationDate.getDate().toString().padStart(2, '0')}/${
+    (expirationDate.getMonth() + 1).toString().padStart(2, '0')}/${
+    expirationDate.getFullYear()} ${
+    expirationDate.getHours().toString().padStart(2, '0')}:${
+    expirationDate.getMinutes().toString().padStart(2, '0')}:${
+    expirationDate.getSeconds().toString().padStart(2, '0')}`;
+  return { token, expirationDate: formattedExpirationDate };
 };
+
 
 // Función para crear usuarios por defecto
 const createDefaultUsers = async () => {
@@ -65,12 +75,13 @@ const login = async (req, res) => {
   const { email, password } = req.body;
   const user = usuarios.find(u => u.email === email);
   if (user && await bcrypt.compare(password, user.password)) {
-    const token = generateToken(user);
-    res.json({ id: user.id, nombre: user.email, role: user.role, token});
+    const { token, expirationDate } = generateToken(user);
+    res.json({ id: user.id, nombre: user.email, role: user.role, token, expirationDate });
   } else {
     res.status(401).json({ message: 'Invalid credentials' });
   }
 };
+
 
 const changePassword = async (req, res) => {
   const { id, oldPassword, newPassword } = req.body;
@@ -116,6 +127,17 @@ const disableUser = (req, res) => {
   }
 };
 
+const getUserById = (req, res) => {
+  const { id } = req.params; 
+  const usuario = usuarios.find(u => u.id == id); 
+
+  if (usuario) {
+    res.json(usuario); 
+  } else {
+    res.status(404).json({ message: 'Usuario no encontrado' });
+  }
+};
+
 module.exports = {
   register,
   login,
@@ -123,4 +145,5 @@ module.exports = {
   forgotPassword,
   enableUser,
   disableUser,
+  getUserById,
 };

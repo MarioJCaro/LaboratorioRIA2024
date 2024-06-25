@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const usuariosController = require('../controllers/usuariosController');
+const { isUser, verifyToken } = require('../middleware/auth');
+const { verify } = require('crypto');
 
 router.post('/register', (req, res) => {
   /* #swagger.summary = 'Registra un nuevo usuario' */
@@ -26,7 +28,7 @@ router.post('/login', (req, res) => {
   usuariosController.login(req, res);
 });
 
-router.post('/change-password', (req, res) => {
+router.post('/change-password', verifyToken,isUser , (req, res) => {
   /* #swagger.summary = 'Cambia la contraseña del usuario' */
   /* #swagger.tags = ['Usuarios'] */
   /* #swagger.security = [{ "BearerAuth": [] }] */
@@ -72,6 +74,13 @@ router.post('/disable-user', (req, res) => {
         schema: { $ref: '#/definitions/EnableDisableUser' }
     } */
   usuariosController.disableUser(req, res);
+});
+
+router.get('/:id', verifyToken, isUser, (req, res) => {
+  /* #swagger.summary = 'Obtiene un usuario por ID' */
+  /* #swagger.tags = ['Usuarios'] */
+  /* #swagger.parameters['id'] = { description: 'ID del usuario', type: 'integer', required: true } */
+  usuariosController.getUserById(req, res);
 });
 
 module.exports = router;

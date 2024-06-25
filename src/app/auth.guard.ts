@@ -7,7 +7,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
 
   const user = authService.getCurrentUser();
-  if (!user) {
+  if (!user || authService.isTokenExpired()) {
     router.navigate(['/login']);
     return false;
   }
@@ -18,7 +18,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   } else {
     // Redirigir según el rol del usuario
     if (user.role === 'ADMIN') {
-      //Hacemos next ya que puede acceder a cualquier ruta
+      // Hacemos next ya que puede acceder a cualquier ruta
       return true;
     } else if (user.role === 'PANADERO') {
       router.navigate(['/ordenes']);

@@ -252,6 +252,11 @@
         "description": "",
         "parameters": [
           {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
             "name": "body",
             "in": "body",
             "description": "Cambio de contraseña de usuario.",
@@ -266,6 +271,12 @@
           },
           "400": {
             "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         },
         "security": [
@@ -369,6 +380,43 @@
             "BearerAuth": []
           }
         ]
+      }
+    },
+    "/usuarios/{id}": {
+      "get": {
+        "tags": [
+          "Usuarios"
+        ],
+        "summary": "Obtiene un usuario por ID",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID del usuario"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
       }
     },
     "/productos/paginado": {
@@ -1219,6 +1267,11 @@
           },
           {
             "name": "sortDirection",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
             "in": "query",
             "type": "string"
           },

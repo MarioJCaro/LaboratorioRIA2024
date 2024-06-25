@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Producto } from './productos.service';
+import { Observable, forkJoin, map, switchMap } from 'rxjs';
+import { Producto, ProductosService } from './productos.service';
 
 export interface Orden {
   id: number;
@@ -15,6 +15,7 @@ export interface Orden {
   }[],
   estado: string;
   fecha: string;
+  total?: number;
 }
 
 export interface Estado {
@@ -46,9 +47,9 @@ export class OrderService {
     { id: 4, nombre: 'Entregado' }
   ];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private productosService: ProductosService) {}
 
-  getOrdenesPaginado(page: number, limit: number, filterField?: string, filterValue?: string, sortField?: string, sortDirection?: string): Observable<OrdenResponse> {
+  getOrdenesPaginado(page: number, limit: number, filterField?: string, filterValue?: string, sortField?: string, sortDirection?: string, userId?: number): Observable<OrdenResponse> {
     let params = new HttpParams()
       .set('page', page.toString())
       .set('limit', limit.toString());
@@ -61,7 +62,46 @@ export class OrderService {
       params = params.set('sortField', sortField).set('sortDirection', sortDirection);
     }
 
-    return this.http.get<OrdenResponse>(`${this.apiUrl}/paginado`, { params });
+    if (userId) {
+      params = params.set('userId', userId.toString());
+    }
+
+    return this.http.get<OrdenResponse>(`${this.apiUrl}/paginado`, { params }).pipe(
+      switchMap(response => {
+        const ordenesConTotales$: Observable<Orden>[] = response.data.map(orden => {
+          return this.calcularTotalOrden(orden).pipe(
+            map(total => ({
+              ...orden,
+              total
+            }))
+          );
+        });
+        return forkJoin(ordenesConTotales$).pipe(
+          map(data => ({
+            ...response,
+            data
+          }))
+        );
+      })
+    );
+  }
+
+  private calcularTotalOrden(orden: Orden): Observable<number> {
+    const productos$: Observable<Producto>[] = orden.productos.map(item => {
+      return this.productosService.getProducto(item.productId);
+    });
+
+    return forkJoin(productos$).pipe(
+      map(productos => {
+        let total = 0;
+        productos.forEach((producto, index) => {
+          const cantidad = orden.productos[index].cantidad;
+          const precio = producto.precio;
+          total += cantidad * precio;
+        });
+        return total;
+      })
+    );
   }
   
   getOrdenes(): Observable<Orden[]> {

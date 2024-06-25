@@ -10,6 +10,8 @@ import { InsumosComponent } from './componentes/insumos/insumos.component';
 import { CartComponent } from './componentes/cart/cart.component';
 import { CheckoutComponent } from './componentes/checkout/checkout.component';
 import { OrderSuccessComponent } from './componentes/order-success/order-success.component';
+import { PerfilComponent } from './componentes/perfil/perfil.component';
+import { DatosPersonalesComponent } from './componentes/datos-personales/datos-personales.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -21,6 +23,8 @@ const routes: Routes = [
   {path: 'carrito', component: CartComponent, canActivate: [authGuard], data: { roles: ['USER'] } },
   {path: 'checkout', component: CheckoutComponent, canActivate: [authGuard], data: { roles: ['USER'] } },
   {path: 'order-success', component: OrderSuccessComponent, canActivate: [authGuard], data: { roles: ['USER'] } },
+  {path: 'perfil', component: PerfilComponent, canActivate: [authGuard], data: { roles: ['USER'] } },
+  {path: 'datos', component: DatosPersonalesComponent, canActivate: [authGuard], data: { roles: ['USER'] } },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
 ];
 

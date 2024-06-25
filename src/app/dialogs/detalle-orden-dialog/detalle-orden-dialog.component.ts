@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { OrderService, Orden, Estado, ProductoConCantidad } from '../../services/order.service';
 import { Producto, ProductosService } from '../../services/productos.service';
@@ -9,12 +9,13 @@ import { Insumo, InsumosService } from '../../services/insumos.service';
   templateUrl: './detalle-orden-dialog.component.html',
   styleUrls: ['./detalle-orden-dialog.component.scss']
 })
-export class DetalleOrdenDialogComponent {
+export class DetalleOrdenDialogComponent implements OnInit {
   estados: Estado[];
   showProductosInsumos: boolean = false;
   productos: ProductoConCantidad[] = [];
   allInsumos: Insumo[] = [];
   mostrarInsumosTotales: boolean = false; // Propiedad para controlar la visualización de insumos totales
+  totalOrden: number = 0; // Propiedad para almacenar el total de la orden
 
   constructor(
     public dialogRef: MatDialogRef<DetalleOrdenDialogComponent>,
@@ -24,6 +25,11 @@ export class DetalleOrdenDialogComponent {
     private insumosService: InsumosService
   ) {
     this.estados = this.orderService.getEstados();
+  }
+
+  ngOnInit(): void {
+    this.loadProductos();
+    this.loadAllInsumos();
   }
 
   onNoClick(): void {
@@ -39,8 +45,7 @@ export class DetalleOrdenDialogComponent {
   toggleProductosInsumos(): void {
     this.showProductosInsumos = !this.showProductosInsumos;
     if (this.showProductosInsumos) {
-      this.loadProductos();
-      this.loadAllInsumos();
+      this.calculateTotalOrden();
     }
   }
 
@@ -54,14 +59,21 @@ export class DetalleOrdenDialogComponent {
         };
 
         this.productos.push(productoConCantidad);
+        this.calculateTotalOrden(); // Recalcular el total cuando se carguen los productos
       });
     }
   }
-  
+
   loadAllInsumos(): void {
     this.insumosService.getInsumos().subscribe(insumos => {
       this.allInsumos = insumos;
     });
+  }
+
+  calculateTotalOrden(): void {
+    this.totalOrden = this.productos.reduce((total, productoConCantidad) => {
+      return total + (productoConCantidad.producto.precio * productoConCantidad.cantidad);
+    }, 0);
   }
 
   getInsumosForProduct(producto: Producto): { insumo: Insumo, cantidad: number }[] {

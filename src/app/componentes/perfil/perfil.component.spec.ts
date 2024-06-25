@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddOrdenDialogComponent } from './add-orden-dialog.component';
+import { PerfilComponent } from './perfil.component';
 
-describe('AddOrdenDialogComponent', () => {
-  let component: AddOrdenDialogComponent;
-  let fixture: ComponentFixture<AddOrdenDialogComponent>;
+describe('PerfilComponent', () => {
+  let component: PerfilComponent;
+  let fixture: ComponentFixture<PerfilComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AddOrdenDialogComponent]
+      declarations: [PerfilComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(AddOrdenDialogComponent);
+    fixture = TestBed.createComponent(PerfilComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

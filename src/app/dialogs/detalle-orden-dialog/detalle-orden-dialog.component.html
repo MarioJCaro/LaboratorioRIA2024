@@ -3,6 +3,7 @@
   <p><strong>Cliente:</strong> {{ data.orden.nombre }} {{ data.orden.apellido }}</p>
   <p><strong>Celular:</strong> {{ data.orden.celular }}</p>
   <p><strong>Fecha:</strong> {{ data.orden.fecha }}</p>
+  <p><strong>Total de la Orden:</strong> ${{ totalOrden.toFixed(2) }}</p>
   <mat-form-field appearance="fill">
     <mat-label>Estado</mat-label>
     <mat-select [(value)]="data.orden.estado">

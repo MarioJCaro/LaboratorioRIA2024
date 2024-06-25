@@ -42,8 +42,10 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { CartComponent } from './componentes/cart/cart.component';
 import { CheckoutComponent } from './componentes/checkout/checkout.component';
 import { OrderSuccessComponent } from './componentes/order-success/order-success.component';
-import { AddOrdenDialogComponent } from './dialogs/add-orden-dialog/add-orden-dialog.component';
 import { DetalleOrdenDialogComponent } from './dialogs/detalle-orden-dialog/detalle-orden-dialog.component';
+import { VerInsumosTotalesDialogComponent } from './dialogs/ver-insumos-totales-dialog/ver-insumos-totales-dialog.component';
+import { PerfilComponent } from './componentes/perfil/perfil.component';
+import { DatosPersonalesComponent } from './componentes/datos-personales/datos-personales.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,8 +64,10 @@ import { DetalleOrdenDialogComponent } from './dialogs/detalle-orden-dialog/deta
     CartComponent,
     CheckoutComponent,
     OrderSuccessComponent,
-    AddOrdenDialogComponent,
-    DetalleOrdenDialogComponent
+    DetalleOrdenDialogComponent,
+    VerInsumosTotalesDialogComponent,
+    PerfilComponent,
+    DatosPersonalesComponent
   ],
   imports: [
     BrowserModule,
