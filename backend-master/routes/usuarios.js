@@ -52,6 +52,18 @@ router.post('/forgot-password', (req, res) => {
   usuariosController.forgotPassword(req, res);
 });
 
+router.post('/reset-password', (req, res) => {
+  /* #swagger.summary = 'Restablece la contraseña' */
+  /* #swagger.tags = ['Usuarios'] */
+  /* #swagger.security = [{ "BearerAuth": [] }] */
+  /* #swagger.parameters['body'] = {
+        in: 'body',
+        description: 'Restablecimiento de contraseña de usuario.',
+        schema: { $ref: '#/definitions/ResetPassword' }
+    } */
+  usuariosController.resetPassword(req, res);
+});
+
 router.post('/enable-user', (req, res) => {
   /* #swagger.summary = 'Habilita un usuario' */
   /* #swagger.tags = ['Usuarios'] */
@@ -81,6 +93,19 @@ router.get('/:id', verifyToken, isUser, (req, res) => {
   /* #swagger.tags = ['Usuarios'] */
   /* #swagger.parameters['id'] = { description: 'ID del usuario', type: 'integer', required: true } */
   usuariosController.getUserById(req, res);
+});
+
+router.put('/:id', verifyToken, isUser, (req, res) => {
+  /* #swagger.summary = 'Actualiza un usuario' */
+  /* #swagger.tags = ['Usuarios'] */
+  /* #swagger.security = [{ "BearerAuth": [] }] */
+  /* #swagger.parameters['id'] = { description: 'ID del usuario', type: 'integer', required: true } */
+  /* #swagger.parameters['body'] = {
+        in: 'body',
+        description: 'Actualización de usuario.',
+        schema: { $ref: '#/definitions/UpdateUser' }
+    } */
+  usuariosController.updateUser(req, res);
 });
 
 module.exports = router;

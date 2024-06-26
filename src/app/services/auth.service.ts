@@ -96,5 +96,23 @@ export class AuthService {
     );
   }
 
+  updateUser(user: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/${user.id}`, user).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  forgotPassword(data: { email: string }): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/forgot-password`, data).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  resetPassword(id: string, newPassword: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/reset-password`, { id, newPassword }).pipe(
+      catchError(this.handleError)
+    );
+  }
+
 
 }

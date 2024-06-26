@@ -104,12 +104,20 @@ const doc = {
       estado: "pendiente",
       fecha: "20/06/2024",
     },
-  }
+    UpdateUser: {
+      email: "email@example.com",
+      telefono: "123456789"
+    },
+    ResetPassword: {
+      userId: 1,
+      newPassword: "newpassword123"
+    }
+  },
 };
 
 const outputFile = './swagger_output.json';
 const endpointsFiles = ['./app.js'];
 
 swaggerAutogen(outputFile, endpointsFiles, doc).then(() => {
-  require('./app'); // Tu archivo principal de la aplicación
+  require('./app'); 
 });

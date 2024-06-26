@@ -1,23 +1,33 @@
 <div class="checkout-container">
-    <mat-card>
-      <mat-card-title>Checkout</mat-card-title>
-      <mat-card-content>
-        <form (ngSubmit)="confirmarCompra()">
-          <mat-form-field>
-            <mat-label>Nombre</mat-label>
-            <input matInput [(ngModel)]="nombre" name="nombre" required>
-          </mat-form-field>
-          <mat-form-field>
-            <mat-label>Apellido</mat-label>
-            <input matInput [(ngModel)]="apellido" name="apellido" required>
-          </mat-form-field>
-          <mat-form-field>
-            <mat-label>Celular</mat-label>
-            <input matInput [(ngModel)]="celular" name="celular" required>
-          </mat-form-field>
-          <button mat-raised-button color="primary" type="submit">Confirmar Compra</button>
-        </form>
-      </mat-card-content>
-    </mat-card>
-  </div>
-  
+  <mat-card>
+    <mat-card-title style="display: flex; justify-content: center; margin-bottom: 0.5rem;">Checkout</mat-card-title>
+    <mat-card-content>
+      <form [formGroup]="checkoutForm" (ngSubmit)="confirmarCompra()">
+        <mat-form-field>
+          <mat-label>Nombre</mat-label>
+          <input matInput formControlName="nombre" required>
+          <mat-error *ngIf="formControls['nombre'].hasError('required') && (formControls['nombre'].dirty || formControls['nombre'].touched)">Nombre es requerido</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Apellido</mat-label>
+          <input matInput formControlName="apellido" required>
+          <mat-error *ngIf="formControls['apellido'].hasError('required') && (formControls['apellido'].dirty || formControls['apellido'].touched)">Apellido es requerido</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Celular</mat-label>
+          <input matInput formControlName="celular" required minlength="8" maxlength="10">
+          <mat-error *ngIf="formControls['celular'].hasError('required') && (formControls['celular'].dirty || formControls['celular'].touched)">
+            Celular es requerido
+          </mat-error>
+          <mat-error *ngIf="formControls['celular'].hasError('minlength')">
+            Celular debe tener al menos 8 caracteres
+          </mat-error>
+          <mat-error *ngIf="formControls['celular'].hasError('maxlength')">
+            Celular no debe tener más de 10 caracteres
+          </mat-error>
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit" [disabled]="checkoutForm.invalid">Confirmar Compra</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

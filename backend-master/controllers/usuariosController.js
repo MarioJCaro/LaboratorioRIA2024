@@ -1,6 +1,35 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const usuarios = [];
+const nodemailer = require('nodemailer');
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  port: '465',
+  secure: true,
+  logger: true,
+  debug: true,
+  secureConnection: false,
+  auth: {
+    user: 'mcarodiaz010@gmail.com',
+    pass: 'fbho tygv sffd adaa'
+  },
+  tls: {
+    rejectUnauthorized: false
+  }
+});
+
+// Función para enviar correos electrónicos
+const sendResetEmail = (email, resetLink) => {
+  const mailOptions = {
+    from: 'mcarodiaz010@gmail.com',
+    to: email,
+    subject: 'Restablecer contraseña',
+    text: `Para restablecer tu contraseña, haz clic en el siguiente enlace: ${resetLink}`
+  };
+
+  return transporter.sendMail(mailOptions);
+};
 
 const generateToken = (user) => {
   const expiresIn = '1h';
@@ -98,12 +127,32 @@ const forgotPassword = (req, res) => {
   const { email } = req.body;
   const user = usuarios.find(u => u.email === email);
   if (user) {
-    // Aquí podrías enviar un correo electrónico con un enlace para restablecer la contraseña
-    res.json({ message: 'Password reset link sent' });
+    const resetLink = `http://localhost:4200/reset-password/${user.id}`; // Ajusta la URL según tu frontend
+    sendResetEmail(email, resetLink)
+      .then(() => {
+        res.json({ message: 'Password reset link sent' });
+      })
+      .catch(error => {
+        console.error('Error sending email:', error);
+        res.status(500).json({ message: 'Error sending email' });
+      });
   } else {
     res.status(404).json({ message: 'User not found' });
   }
 };
+
+const resetPassword = (req, res) => {
+  const { id, newPassword } = req.body;
+  const user = usuarios.find(u => u.id === parseInt(id));
+  if (user) {
+    user.password = bcrypt.hashSync(newPassword, 10);
+    res.json({ message: 'Password updated successfully' });
+  } else {
+    res.status(404).json({ message: 'User not found' });
+  }
+};
+
+
 
 const enableUser = (req, res) => {
   const { id } = req.body;
@@ -138,6 +187,19 @@ const getUserById = (req, res) => {
   }
 };
 
+const updateUser = (req, res) => {
+  const { id } = req.params;
+  const { email, telefono } = req.body;
+  const user = usuarios.find(u => u.id == id);
+  if (user) {
+    user.email = email;
+    user.telefono = telefono;
+    res.json({ message: 'User updated' });
+  } else {
+    res.status(404).json({ message: 'User not found' });
+  }
+}
+
 module.exports = {
   register,
   login,
@@ -146,4 +208,6 @@ module.exports = {
   enableUser,
   disableUser,
   getUserById,
+  updateUser,
+  resetPassword
 };

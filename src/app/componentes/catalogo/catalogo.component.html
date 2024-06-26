@@ -11,7 +11,7 @@
           <p>{{ producto.descripcion }}</p>
           <div class="cantidad-container">
             <label for="cantidad-{{i}}">Cantidad</label>
-            <input id="cantidad-{{i}}" type="number" [(ngModel)]="selectedQuantity[i]" min="1" value="1" class="cantidad-input">
+            <input id="cantidad-{{i}}" type="number" [(ngModel)]="selectedQuantity[i]" (keypress)="validarEntrada($event)" pattern="[0-9]*" min="1" value="1" class="cantidad-input">
           </div>
         </mat-card-content>
         <mat-card-actions style="display: flex; justify-content: center;">

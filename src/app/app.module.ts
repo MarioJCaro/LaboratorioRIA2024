@@ -46,6 +46,8 @@ import { DetalleOrdenDialogComponent } from './dialogs/detalle-orden-dialog/deta
 import { VerInsumosTotalesDialogComponent } from './dialogs/ver-insumos-totales-dialog/ver-insumos-totales-dialog.component';
 import { PerfilComponent } from './componentes/perfil/perfil.component';
 import { DatosPersonalesComponent } from './componentes/datos-personales/datos-personales.component';
+import { ForgotPasswordComponent } from './componentes/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './componentes/reset-password/reset-password.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -67,7 +69,9 @@ import { DatosPersonalesComponent } from './componentes/datos-personales/datos-p
     DetalleOrdenDialogComponent,
     VerInsumosTotalesDialogComponent,
     PerfilComponent,
-    DatosPersonalesComponent
+    DatosPersonalesComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,

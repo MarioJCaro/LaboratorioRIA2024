@@ -12,6 +12,8 @@ import { CheckoutComponent } from './componentes/checkout/checkout.component';
 import { OrderSuccessComponent } from './componentes/order-success/order-success.component';
 import { PerfilComponent } from './componentes/perfil/perfil.component';
 import { DatosPersonalesComponent } from './componentes/datos-personales/datos-personales.component';
+import { ForgotPasswordComponent } from './componentes/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './componentes/reset-password/reset-password.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -25,6 +27,8 @@ const routes: Routes = [
   {path: 'order-success', component: OrderSuccessComponent, canActivate: [authGuard], data: { roles: ['USER'] } },
   {path: 'perfil', component: PerfilComponent, canActivate: [authGuard], data: { roles: ['USER'] } },
   {path: 'datos', component: DatosPersonalesComponent, canActivate: [authGuard], data: { roles: ['USER'] } },
+  {path: 'forgot-password', component: ForgotPasswordComponent},
+  {path: 'reset-password/:id', component: ResetPasswordComponent},
   { path: '', redirectTo: '/login', pathMatch: 'full' },
 ];
 

@@ -64,4 +64,13 @@ export class CatalogoComponent implements OnInit {
     this.cartService.addToCart(userId, producto.id, cantidad);
     console.log('Producto añadido al carrito:', producto, 'Cantidad:', cantidad);
   }
+
+  validarEntrada(event: KeyboardEvent): void {
+    const pattern = /[0-9]/; // Expresión regular para permitir solo números
+    const inputChar = event.key;
+
+    if (!pattern.test(inputChar)) {
+      event.preventDefault(); // Cancelar la pulsación de tecla si no es un número
+    }
+  }
 }

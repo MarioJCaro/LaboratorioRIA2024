@@ -11,6 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class DatosPersonalesComponent implements OnInit {
   usuario: any;
   cambiandoPassword: boolean = false;
+
   // Datos de la nueva contraseña
   oldPassword!: string;
   newPassword!: string;
@@ -23,9 +24,7 @@ export class DatosPersonalesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    //obtengo de la local storage el usuario
     const user = JSON.parse(localStorage.getItem('user') || '{}');
-
 
     this.authService.getUserById(user.id).subscribe(
       (usuario: any) => {
@@ -33,7 +32,18 @@ export class DatosPersonalesComponent implements OnInit {
       },
       (error) => {
         console.error('Error al obtener datos del usuario:', error);
-        // Manejo de errores, como redireccionar a una página de error o mostrar un mensaje al usuario
+      }
+    );
+  }
+
+  guardarCambios(): void {
+    this.authService.updateUser(this.usuario).subscribe(
+      () => {
+        this.snackBar.open('Datos personales actualizados', 'Cerrar', { duration: 3000 });
+      },
+      (error) => {
+        console.error('Error al actualizar datos personales:', error);
+        this.snackBar.open('Error al actualizar datos personales', 'Cerrar', { duration: 3000 });
       }
     );
   }
@@ -48,19 +58,17 @@ export class DatosPersonalesComponent implements OnInit {
       this.snackBar.open('Las contraseñas nuevas no coinciden', 'Cerrar', { duration: 3000 });
       return;
     }
-    console.log(this.usuario.id, this.oldPassword, this.newPassword);
 
     this.authService.changePassword(this.usuario.id, this.oldPassword, this.newPassword).subscribe(
       () => {
         this.snackBar.open('Contraseña cambiada exitosamente', 'Cerrar', { duration: 3000 });
-        // Limpiar campos de contraseña
         this.oldPassword = '';
         this.newPassword = '';
         this.confirmNewPassword = '';
+        this.cambiandoPassword = false;
       },
       (error) => {
         console.error('Error al cambiar contraseña:', error);
-        // Manejo de errores, como mostrar un mensaje de error al usuario
         this.snackBar.open('Error al cambiar contraseña', 'Cerrar', { duration: 3000 });
       }
     );
