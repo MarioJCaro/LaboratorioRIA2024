@@ -22,3 +22,18 @@
     -webkit-appearance: none;
     margin: 0;
   }
+
+  .add-insumo-card {
+    max-width: 400px;  
+    margin: 0 auto;   
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .add-insumo-button {
+    display: flex;
+    justify-content: flex-end;
+  }
+  

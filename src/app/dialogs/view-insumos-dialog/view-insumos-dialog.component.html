@@ -42,19 +42,25 @@
   
   <div *ngIf="showAddInsumo">
     <h2>Agregar Insumo</h2>
-    <mat-form-field>
-      <mat-label>Insumo</mat-label>
-      <mat-select [(value)]="newInsumoId">
-        <mat-option *ngFor="let insumo of availableInsumos" [value]="insumo.id">
-          {{insumo.nombre}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <mat-form-field>
-      <mat-label>Cantidad</mat-label>
-      <input matInput type="number" [(ngModel)]="newCantidad" class="no-spinner">
-    </mat-form-field>
-    <button mat-raised-button color="primary" (click)="addNewInsumo()">Agregar</button>
+    <mat-card class="add-insumo-card">
+      <mat-form-field>
+        <mat-label>Insumo</mat-label>
+        <mat-select [(value)]="newInsumoId">
+          <mat-option *ngFor="let insumo of availableInsumos" [value]="insumo.id">
+            {{insumo.nombre}} ({{insumo.unidad}})
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+  
+      <mat-form-field>
+        <mat-label>Cantidad</mat-label>
+        <input matInput type="number" [(ngModel)]="newCantidad" class="no-spinner">
+      </mat-form-field>
+      
+      <div class="add-insumo-button">
+        <button mat-raised-button color="primary" (click)="addNewInsumo()">Agregar</button>
+      </div>
+    </mat-card>
   </div>
-</div>
+  
+  
