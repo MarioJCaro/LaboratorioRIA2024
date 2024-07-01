@@ -1,0 +1,27 @@
+<h1 mat-dialog-title>{{ isEditMode ? 'Editar Panadero' : 'Agregar Panadero' }}</h1>
+<div mat-dialog-content>
+  <form [formGroup]="panaderoForm" class="panadero-form">
+    <mat-form-field class="full-width">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email">
+      <mat-error *ngIf="panaderoForm.get('email')?.hasError('required')">Email es requerido</mat-error>
+      <mat-error *ngIf="panaderoForm.get('email')?.hasError('email')">Email no es válido</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Teléfono</mat-label>
+      <input matInput formControlName="telefono">
+      <mat-error *ngIf="panaderoForm.get('telefono')?.hasError('required')">Teléfono es requerido</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Contraseña</mat-label>
+      <input matInput type="password" formControlName="password" [placeholder]="isEditMode ? 'Nueva contraseña (opcional)' : 'Contraseña'">
+      <mat-error *ngIf="panaderoForm.get('password')?.hasError('required') && !isEditMode">Contraseña es requerida</mat-error>
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions class="dialog-actions">
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button mat-button color="primary" (click)="onSave()">Guardar</button>
+</div>

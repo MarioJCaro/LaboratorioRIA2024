@@ -29,6 +29,12 @@
         <span>Catálogo</span>
       </div>
       </a>
+      <a mat-list-item *ngIf="isLoggedIn && (isUser || isAdmin)" routerLink="/panaderos" routerLinkActive="active" class="item">
+        <div style="display: flex; align-items: center;">
+        <mat-icon>groups</mat-icon>
+        <span>Panaderos</span>
+      </div>
+      </a>
       <a mat-list-item *ngIf="isLoggedIn" (click)="logout()" class="item" style="cursor: pointer;">
         <div style="display: flex; align-items: center;">
         <mat-icon>exit_to_app</mat-icon>

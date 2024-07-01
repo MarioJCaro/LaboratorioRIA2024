@@ -48,6 +48,8 @@ import { PerfilComponent } from './componentes/perfil/perfil.component';
 import { DatosPersonalesComponent } from './componentes/datos-personales/datos-personales.component';
 import { ForgotPasswordComponent } from './componentes/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './componentes/reset-password/reset-password.component';
+import { PanaderosComponent } from './componentes/panaderos/panaderos.component';
+import { AddPanaderoDialogComponent } from './dialogs/add-panadero-dialog/add-panadero-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -71,7 +73,9 @@ import { ResetPasswordComponent } from './componentes/reset-password/reset-passw
     PerfilComponent,
     DatosPersonalesComponent,
     ForgotPasswordComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    PanaderosComponent,
+    AddPanaderoDialogComponent
   ],
   imports: [
     BrowserModule,

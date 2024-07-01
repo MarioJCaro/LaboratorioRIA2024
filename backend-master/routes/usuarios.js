@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const usuariosController = require('../controllers/usuariosController');
-const { isUser, verifyToken } = require('../middleware/auth');
+const { isUser, verifyToken, isAdmin } = require('../middleware/auth');
 const { verify } = require('crypto');
 
 router.post('/register', (req, res) => {
@@ -88,6 +88,43 @@ router.post('/disable-user', (req, res) => {
   usuariosController.disableUser(req, res);
 });
 
+router.post('/panaderos', verifyToken, isAdmin, (req, res) => {
+  /* #swagger.summary = 'Crea un nuevo panadero' */
+  /* #swagger.tags = ['Panaderos'] */
+  /* #swagger.security = [{ "BearerAuth": [] }] */
+  /* #swagger.parameters['body'] = {
+        in: 'body',
+        description: 'Creación de nuevo panadero.',
+        schema: { $ref: '#/definitions/RegisterUser' }
+    } */
+  usuariosController.createPanadero(req, res);
+});
+
+router.get('/panaderos', verifyToken, isAdmin, (req, res) => {
+  /* #swagger.summary = 'Obtiene todos los panaderos' */
+  /* #swagger.tags = ['Panaderos'] */
+  usuariosController.getPanaderos(req, res);
+});
+
+router.put('/panaderos/:id', verifyToken, isAdmin, (req, res) => {
+  /* #swagger.summary = 'Actualiza un panadero' */
+  /* #swagger.tags = ['Panaderos'] */
+  /* #swagger.parameters['id'] = { description: 'ID del panadero', type: 'integer', required: true } */
+  /* #swagger.parameters['body'] = {
+        in: 'body',
+        description: 'Actualización de panadero.',
+        schema: { $ref: '#/definitions/UpdateUser' }
+    } */
+  usuariosController.updatePanadero(req, res);
+});
+
+router.delete('/panaderos/:id', verifyToken, isAdmin, (req, res) => {
+  /* #swagger.summary = 'Elimina un panadero' */
+  /* #swagger.tags = ['Panaderos'] */
+  /* #swagger.parameters['id'] = { description: 'ID del panadero', type: 'integer', required: true } */
+  usuariosController.deletePanadero(req, res);
+});
+
 router.get('/:id', verifyToken, isUser, (req, res) => {
   /* #swagger.summary = 'Obtiene un usuario por ID' */
   /* #swagger.tags = ['Usuarios'] */
@@ -107,5 +144,8 @@ router.put('/:id', verifyToken, isUser, (req, res) => {
     } */
   usuariosController.updateUser(req, res);
 });
+
+
+
 
 module.exports = router;

@@ -3,27 +3,27 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    padding: 0 1rem; /* Añadir padding para móviles */
+    padding: 0 1rem; 
   }
   
   mat-card {
-    width: 100%; /* 100% del ancho para móviles */
-    max-width: 400px; /* Limitar el ancho máximo */
+    width: 100%;
+    max-width: 400px; 
   }
   
   mat-card-title {
-    text-align: center; /* Centrar el título */
-    margin-bottom: 1rem; /* Añadir margen inferior para separar el título de los campos */
+    text-align: center; 
+    margin-bottom: 1rem; 
   }
   
   mat-form-field {
-    width: 100%; /* Asegurarse de que los campos ocupen el 100% del ancho */
+    width: 100%; 
     margin-bottom: 1rem;
   }
   
   button {
-    width: 100%; /* Botón ancho completo para móviles */
-    margin-top: 1rem; /* Espacio entre los campos y el botón */
+    width: 100%; 
+    margin-top: 1rem; 
   }
   
   .error-message {
@@ -32,25 +32,23 @@
     text-align: center;
   }
   
-  /* Media query para tablets y dispositivos más grandes */
   @media (min-width: 600px) {
     .register-container {
-      padding: 0 2rem; /* Aumentar el padding para tablets */
+      padding: 0 2rem;
     }
   
     mat-card {
-      width: 80%; /* Reducir el ancho del card en pantallas más grandes */
+      width: 80%; 
     }
   }
   
-  /* Media query para dispositivos aún más grandes, como desktops */
   @media (min-width: 1024px) {
     .register-container {
-      padding: 0 3rem; /* Aumentar el padding para desktops */
+      padding: 0 3rem; 
     }
   
     mat-card {
-      width: 60%; /* Reducir aún más el ancho del card */
+      width: 60%;
     }
   }
   .register-link {

@@ -200,6 +200,70 @@ const updateUser = (req, res) => {
   }
 }
 
+// Crear panadero
+const createPanadero = async (req, res) => {
+  try {
+    const { email, password, telefono } = req.body;
+
+    if (!email || !password || !telefono) {
+      return res.status(400).json({ message: 'Todos los campos son obligatorios' });
+    }
+
+    const existingUser = usuarios.find(user => user.email === email);
+    if (existingUser) {
+      return res.status(400).json({ message: 'El usuario ya existe' });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newPanadero = {
+      id: usuarios.length ? usuarios[usuarios.length - 1].id + 1 : 1,
+      email,
+      password: hashedPassword,
+      role: 'PANADERO',
+      telefono,
+      enabled: true,
+    };
+
+    usuarios.push(newPanadero);
+    res.status(201).json(newPanadero);
+  } catch (error) {
+    res.status(500).json({ message: 'Error al registrar el panadero', error: error.message });
+  }
+};
+
+// Obtener todos los panaderos
+const getPanaderos = (req, res) => {
+  const panaderos = usuarios.filter(user => user.role === 'PANADERO');
+  res.json(panaderos);
+};
+
+// Actualizar panadero
+const updatePanadero = (req, res) => {
+  const { id } = req.params;
+  const { email, telefono, password } = req.body;
+  const panadero = usuarios.find(u => u.id == id && u.role === 'PANADERO');
+  if (panadero) {
+    panadero.email = email;
+    panadero.telefono = telefono;
+    panadero.password = bcrypt.hashSync(password, 10);
+    res.json({ message: 'Panadero actualizado' });
+  } else {
+    res.status(404).json({ message: 'Panadero no encontrado' });
+  }
+};
+
+// Eliminar panadero
+const deletePanadero = (req, res) => {
+  const { id } = req.params;
+  const index = usuarios.findIndex(u => u.id == id && u.role === 'PANADERO');
+  if (index !== -1) {
+    usuarios.splice(index, 1);
+    res.json({ message: 'Panadero eliminado' });
+  } else {
+    res.status(404).json({ message: 'Panadero no encontrado' });
+  }
+};
+
 module.exports = {
   register,
   login,
@@ -209,5 +273,9 @@ module.exports = {
   disableUser,
   getUserById,
   updateUser,
-  resetPassword
+  resetPassword,
+  createPanadero,
+  getPanaderos,
+  updatePanadero,
+  deletePanadero
 };

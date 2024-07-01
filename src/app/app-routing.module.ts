@@ -14,6 +14,7 @@ import { PerfilComponent } from './componentes/perfil/perfil.component';
 import { DatosPersonalesComponent } from './componentes/datos-personales/datos-personales.component';
 import { ForgotPasswordComponent } from './componentes/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './componentes/reset-password/reset-password.component';
+import { PanaderosComponent } from './componentes/panaderos/panaderos.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -29,6 +30,7 @@ const routes: Routes = [
   {path: 'datos', component: DatosPersonalesComponent, canActivate: [authGuard], data: { roles: ['USER'] } },
   {path: 'forgot-password', component: ForgotPasswordComponent},
   {path: 'reset-password/:id', component: ResetPasswordComponent},
+  {path: 'panaderos', component: PanaderosComponent, canActivate: [authGuard], data: { roles: ['ADMIN'] }},
   { path: '', redirectTo: '/login', pathMatch: 'full' },
 ];
 

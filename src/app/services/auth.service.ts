@@ -114,5 +114,28 @@ export class AuthService {
     );
   }
 
+  createPanadero(data: { email: string, password: string, telefono: string }): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/panaderos`, data).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getPanaderos(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/panaderos`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  updatePanadero(panadero:any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/panaderos/${panadero.id}`, panadero).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  deletePanadero(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/panaderos/${id}`).pipe(
+      catchError(this.handleError)
+    );
+  }
 
 }
