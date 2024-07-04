@@ -3,6 +3,7 @@ import { Producto, ProductosService, ProductoResponse } from '../../services/pro
 import { CartService } from '../../services/cart.service'; // Importar el servicio del carrito
 import { PageEvent } from '@angular/material/paginator';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-catalogo',
@@ -18,7 +19,8 @@ export class CatalogoComponent implements OnInit {
   constructor(
     private productosService: ProductosService,
     private cartService: CartService, // Inyectar el servicio del carrito
-    private breakpointObserver: BreakpointObserver
+    private breakpointObserver: BreakpointObserver,
+    private matSnackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -59,10 +61,9 @@ export class CatalogoComponent implements OnInit {
 
   agregarAlCarrito(producto: Producto, index: number): void {
     const userId = JSON.parse(localStorage.getItem('user') ?? '{}').id;
-    console.log('Usuario actual:', userId);
     const cantidad = this.selectedQuantity[index];
     this.cartService.addToCart(userId, producto.id, cantidad);
-    console.log('Producto añadido al carrito:', producto, 'Cantidad:', cantidad);
+    this.matSnackBar.open('Producto agregado al carrito', 'Cerrar', { duration: 3000 });
   }
 
   validarEntrada(event: KeyboardEvent): void {
