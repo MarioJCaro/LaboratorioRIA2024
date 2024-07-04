@@ -29,7 +29,7 @@
         <span>Catálogo</span>
       </div>
       </a>
-      <a mat-list-item *ngIf="isLoggedIn && (isUser || isAdmin)" routerLink="/panaderos" routerLinkActive="active" class="item">
+      <a mat-list-item *ngIf="isLoggedIn && isAdmin" routerLink="/panaderos" routerLinkActive="active" class="item">
         <div style="display: flex; align-items: center;">
         <mat-icon>groups</mat-icon>
         <span>Panaderos</span>

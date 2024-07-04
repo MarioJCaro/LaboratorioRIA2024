@@ -43,7 +43,6 @@ export class ViewInsumosDialogComponent implements OnInit {
     this.insumosService.getInsumos().subscribe(allInsumos => {
       const currentInsumoIds = this.insumos.map(i => i.insumo.id);
       this.availableInsumos = allInsumos.filter(insumo => !currentInsumoIds.includes(insumo.id));
-      console.log(this.availableInsumos);
     });
   }
 

@@ -112,9 +112,13 @@ export class ProductosComponent implements OnInit {
   }
 
   viewInsumos(producto: Producto): void {
-    this.dialog.open(ViewInsumosDialogComponent, {
+    const dialogRef = this.dialog.open(ViewInsumosDialogComponent, {
       width: '50%',
       data: { producto }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.loadProductos();
     });
   }
 

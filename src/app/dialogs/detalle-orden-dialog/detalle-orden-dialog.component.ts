@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { OrderService, Orden, Estado, ProductoConCantidad } from '../../services/order.service';
 import { Producto, ProductosService } from '../../services/productos.service';
 import { Insumo, InsumosService } from '../../services/insumos.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-detalle-orden-dialog',
@@ -16,18 +17,25 @@ export class DetalleOrdenDialogComponent implements OnInit {
   allInsumos: Insumo[] = [];
   mostrarInsumosTotales: boolean = false; // Propiedad para controlar la visualización de insumos totales
   totalOrden: number = 0; // Propiedad para almacenar el total de la orden
+  isUser: boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<DetalleOrdenDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { orden: Orden },
     private orderService: OrderService,
     private productosService: ProductosService,
-    private insumosService: InsumosService
+    private insumosService: InsumosService,
+    private authService: AuthService
   ) {
     this.estados = this.orderService.getEstados();
   }
 
   ngOnInit(): void {
+    const user = this.authService.getCurrentUser();
+    if (user && user.role === 'USER') {
+      this.isUser = true;
+    }
+    
     this.loadProductos();
     this.loadAllInsumos();
   }
